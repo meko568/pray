@@ -1,0 +1,59 @@
+:root {
+    --first: #cdb4db;
+    --seocnd: #d4a373;
+    --third: #a3b18a;
+    --fourth: #778da9;
+    --fifth: #00b4d8;
+}
+
+html {
+    direction: rtl;
+    text-align: right;
+}
+
+.mainpray {
+    position: relative;
+    width: fit-content;
+    border-radius: 10px;
+    padding-left: 100px;
+    min-width: 300px;
+}
+
+@media (max-width:767px) {
+    .mainpray {
+        min-width: 100vw !important;
+        padding-left: 10px;
+    }
+}
+
+.mainpray.first {
+    background-color: var(--first);
+}
+
+.mainpray.second {
+    background-color: var(--seocnd);
+}
+
+.mainpray.third {
+    background-color: var(--third);
+}
+
+.mainpray.fourth {
+    background-color: var(--fourth);
+}
+
+.mainpray.fifth {
+    background-color: var(--fifth);
+}
+
+.mainpray .text {
+    display: flex;
+    margin-top: 50px;
+    gap: 40px;
+    padding: 20px;
+    padding-right: 10px;
+    font-size: 30px;
+    position: relative;
+    z-index: 10;
+    color: white;
+}
