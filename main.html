@@ -7,56 +7,77 @@
     <title>الصلوات</title>
     <link rel="stylesheet" href="main.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link rel="stylesheet" href="bootstrap.min.css">
 </head>
 
 <body>
+    <nav class="navbar navbar-expand-lg sticky-top">
+        <div class="container-fluid">
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+                aria-label="Toggle navigation">
+                <i class="fas fa-bars"></i>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav mb-2 mb-lg-0">
+                    <li class="nav-item active">
+                        <a class="nav-link active" aria-current="page" href="main.html">الصلوات</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="main2.html">تسبيح</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
     <div class="container">
         <div class="first mainpray">
             <div class="text">
                 <div class="pray first">الفجر:</div>
                 <div class="plus"><i class="fas fa-plus"></i></div>
+                <div class="first num">0</div>
                 <div class="minus"><i class="fa-solid fa-minus"></i>
                 </div>
-                <div class="first num">0</div>
             </div>
         </div>
         <div class="second mainpray">
             <div class="text">
                 <div class="pray second">الظهر</div>
                 <div class="plus"><i class="fas fa-plus"></i></div>
+                <div class="second num">0</div>
                 <div class="minus"><i class="fa-solid fa-minus"></i>
                 </div>
-                <div class="second num">0</div>
             </div>
         </div>
         <div class="third mainpray">
             <div class="text">
                 <div class="pray third">العصر:</div>
                 <div class="plus"><i class="fas fa-plus"></i></div>
+                <div class="third num">0</div>
                 <div class="minus"><i class="fa-solid fa-minus"></i>
                 </div>
-                <div class="third num">0</div>
             </div>
         </div>
-    </div>
-    <div class="fourth mainpray">
-        <div class="text">
-            <div class="pray fourth">المغرب:</div>
-            <div class="plus"><i class="fas fa-plus"></i></div>
-            <div class="minus"><i class="fas fa-minus"></i></div>
-            <div class="fourth num">0</div>
-        </div>
-    </div>
-    <div class="fifth mainpray">
-        <div class="text">
-            <div class="pray fifth">العشاء:</div>
-            <div class="plus"><i class="fas fa-plus"></i></div>
-            <div class="minus"><i class="fa-solid fa-minus"></i>
+        <div class="fourth mainpray">
+            <div class="text">
+                <div class="pray fourth">المغرب:</div>
+                <div class="plus"><i class="fas fa-plus"></i></div>
+                <div class="fourth num">0</div>
+                <div class="minus"><i class="fas fa-minus"></i></div>
             </div>
-            <div class="fifth num">0</div>
+        </div>
+        <div class="fifth mainpray">
+            <div class="text">
+                <div class="pray fifth">العشاء:</div>
+                <div class="plus"><i class="fas fa-plus"></i></div>
+                <div class="fifth num">0</div>
+                <div class="minus"><i class="fa-solid fa-minus"></i>
+                </div>
+            </div>
         </div>
     </div>
     <script src="main.js"></script>
+    <script src="bootstrap.bundle.min.js"></script>
 </body>
 
 </html>
