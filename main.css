@@ -26,6 +26,7 @@ html {
     padding-left: 10px;
   }
 }
+
 .mainpray.first {
   background-color: var(--first);
 }
@@ -113,4 +114,6 @@ html {
     gap: 10px;
     margin: auto;
   }
-}/*# sourceMappingURL=main.css.map */
+}
+
+/*# sourceMappingURL=main.css.map */
