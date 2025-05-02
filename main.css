@@ -26,7 +26,6 @@ html {
     padding-left: 10px;
   }
 }
-
 .mainpray.first {
   background-color: var(--first);
 }
@@ -115,5 +114,6 @@ html {
     margin: auto;
   }
 }
-
-/*# sourceMappingURL=main.css.map */
+.bar {
+  color: white;
+}/*# sourceMappingURL=main.css.map */
