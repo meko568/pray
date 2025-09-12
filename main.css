@@ -9,57 +9,107 @@
 html {
   direction: rtl;
   text-align: right;
+  scroll-behavior: smooth;
 }
 
 .mainpray {
   position: relative;
-  width: -moz-fit-content;
-  width: fit-content;
-  border-radius: 10px;
-  padding-left: 100px;
-  min-width: 300px;
+  width: 100%;
+  max-width: 500px;
+  margin: 15px auto;
+  border-radius: 12px;
+  background: linear-gradient(135deg, #ffffff 0%, #f5f9ff 100%), url("data:image/svg+xml,%3Csvg width='80' height='80' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23c9d8f0' fill-opacity='0.15'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+  border: 1px solid rgba(220, 230, 250, 0.8);
+  overflow: hidden;
+  transition: all 0.3s ease;
+  color: #2c3e50;
 }
-
+.mainpray:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
+  background: linear-gradient(135deg, #ffffff 0%, #eef5ff 100%), url("data:image/svg+xml,%3Csvg width='80' height='80' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23b8d0f0' fill-opacity='0.1'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+  border-color: rgba(200, 220, 250, 0.9);
+}
 @media (max-width: 767px) {
   .mainpray {
-    min-width: 100vw !important;
-    padding-left: 10px;
+    width: 95% !important;
+    margin: 10px auto;
+  }
+  .mainpray .text {
+    padding: 20px 15px;
+    gap: 15px;
+  }
+  .mainpray .num {
+    font-size: 1.8rem;
+    padding: 4px 12px;
+  }
+  .mainpray .plus, .mainpray .minus {
+    width: 36px;
+    height: 36px;
+    font-size: 1.1rem;
   }
 }
-.mainpray.first {
-  background-color: var(--first);
+
+.mainpray.first .pray {
+  color: #1a73e8; /* Bright blue for Fajr */
+  font-weight: 600;
+}
+.mainpray.first .plus, .mainpray.first .minus {
+  color: #1a73e8; /* Matching Fajr blue */
 }
 
-.mainpray.second {
-  background-color: var(--seocnd);
+.mainpray.second .pray {
+  color: #0b8043; /* Green for Dhuhr */
+  font-weight: 600;
+}
+.mainpray.second .plus, .mainpray.second .minus {
+  color: #0b8043; /* Matching Dhuhr green */
 }
 
-.mainpray.third {
-  background-color: var(--third);
+.mainpray.third .pray {
+  color: #f6bf26; /* Gold for Asr */
+  font-weight: 600;
+}
+.mainpray.third .plus, .mainpray.third .minus {
+  color: #f6bf26; /* Matching Asr gold */
 }
 
-.mainpray.fourth {
-  background-color: var(--fourth);
+.mainpray.fourth .pray {
+  color: #e67c73; /* Coral for Maghrib */
+  font-weight: 600;
+}
+.mainpray.fourth .plus, .mainpray.fourth .minus {
+  color: #e67c73; /* Matching Maghrib coral */
 }
 
-.mainpray.fifth {
-  background-color: var(--fifth);
+.mainpray.fifth .pray {
+  color: #8e24aa; /* Purple for Isha */
+  font-weight: 600;
+}
+.mainpray.fifth .plus, .mainpray.fifth .minus {
+  color: #8e24aa; /* Matching Isha purple */
 }
 
 .mainpray .text {
   display: flex;
-  margin-top: 50px;
-  gap: 40px;
-  padding: 20px;
-  padding-right: 10px;
-  font-size: 30px;
+  align-items: center;
+  justify-content: space-between;
+  padding: 25px 30px;
   position: relative;
-  z-index: 10;
-  color: white;
+  z-index: 2;
+  background: white;
+  color: #2c3e50;
+  gap: 20px;
 }
 
 .navbar {
-  background-color: var(--fifth);
+  background: linear-gradient(135deg, #00b4d8 0%, #0077b6 100%);
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  padding: 0.8rem 1rem;
+  transition: all 0.3s ease;
+  border-end-start-radius: 6px;
+  border-end-end-radius: 6px;
 }
 
 .nav-item {
@@ -67,38 +117,266 @@ html {
 }
 
 .nav-link {
-  color: white !important;
-  transition: 0.5s !important;
+  color: rgba(255, 255, 255, 0.9) !important;
+  font-weight: 500;
+  padding: 0.5rem 1.2rem !important;
+  margin: 0 0.2rem;
+  border-radius: 8px;
+  transition: all 0.3s ease !important;
+  position: relative;
+  overflow: hidden;
 }
 
 .nav-link:hover {
-  color: rgb(200, 215, 227) !important;
+  color: white !important;
+  background: rgba(255, 255, 255, 0.15);
+  transform: translateY(-2px);
+}
+
+.catogery {
+  display: flex;
+  list-style: none;
+}
+
+.catogery li a {
+  color: #0d47a1 !important; /* Darker blue for better visibility */
+  transition: all 0.3s ease;
+  font-weight: 500;
+  text-decoration: none;
+  position: relative;
+  padding: 0.5rem 1rem;
+  display: block;
+  border-radius: 6px;
+}
+.catogery li a:hover {
+  color: #002b7f !important; /* Even darker blue on hover */
+  background: rgba(13, 71, 161, 0.15);
+  transform: translateY(-1px);
+  text-shadow: 0 0 8px rgba(13, 71, 161, 0.25);
+}
+.catogery li a.active {
+  color: #002b7f !important;
+  font-weight: 600;
+  background: rgba(13, 71, 161, 0.15);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Add a subtle scale effect on click */
+.catogery li a:active {
+  transform: scale(0.95);
+}
+
+ul li {
+  position: relative;
+  cursor: pointer;
+}
+
+.navbar ul li::before {
+  content: "";
+  position: absolute;
+  bottom: -5px;
+  left: 50%;
+  transform: translateX(-50%);
+  height: 3px;
+  width: 0;
+  background: #ff9e00;
+  border-radius: 3px;
+  transition: all 0.3s ease;
+}
+
+.navbar ul li:hover::before {
+  width: 70%;
+}
+
+.navbar-brand {
+  color: white !important;
+  font-weight: 600;
+  font-size: 1.5rem;
+  letter-spacing: 0.5px;
+}
+
+.navbar-toggler {
+  border: none;
+  padding: 0.5rem;
+}
+
+.navbar-toggler:focus {
+  box-shadow: none;
+}
+
+.navbar-toggler-icon {
+  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba%28255, 255, 255, 0.9%29' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e") !important;
 }
 
 .active {
-  color: rgb(0, 34, 255) !important;
+  color: #01497c !important;
+}
+
+.navbar {
+  flex-wrap: nowrap !important;
 }
 
 .circle {
+  border-radius: 10px;
+  color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   width: 150px;
   height: 150px;
-  background-color: var(--seocnd);
+  background: linear-gradient(135deg, var(--seocnd), #01497c);
+  margin: 0 auto 15px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+.circle::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 100%;
+  height: 100%;
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 10px;
+  transform: translate(-50%, -50%) scale(0);
+  transition: transform 0.3s ease, background 0.3s ease;
+}
+.circle:hover {
+  transform: translateY(-5px) scale(1.05);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.25);
+}
+.circle:hover::before {
+  transform: translate(-50%, -50%) scale(1);
+}
+.circle:hover .num {
+  font-size: 2.5rem;
+  font-weight: 700;
   color: white;
-  border-radius: 50%;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  position: relative;
+  z-index: 1;
+  transition: transform 0.3s ease;
+}
+.circle .num {
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: white;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  position: relative;
+  z-index: 1;
+  transition: transform 0.3s ease;
+}
+.circle .plus, .circle .minus {
+  width: 40px;
+  height: 40px;
+  border-radius: 10px;
   display: flex;
   align-items: center;
   justify-content: center;
+  font-size: 1.2rem;
+  color: white;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  background: #f8f9fa;
+  border: 2px solid #e9ecef;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+}
+.circle .plus:hover, .circle .minus:hover {
+  background: #e9ecef;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+.circle .plus:active, .circle .minus:active {
+  transform: translateY(0);
+  box-shadow: 0 2px 3px rgba(0, 0, 0, 0.1);
+}
+.circle .plus {
+  top: 10px;
+  right: 10px;
+}
+.circle .minus {
+  bottom: 10px;
+  right: 10px;
+}
+.circle .clear {
+  position: absolute;
+  bottom: 5px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(255, 255, 255, 0.2);
+  border: none;
+  color: white;
+  padding: 2px 8px;
+  border-radius: 10px;
+  font-size: 0.7rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+.circle .clear:hover {
+  background: rgba(255, 255, 255, 0.3);
 }
 
 .info {
-  background-color: var(--first);
-  width: 150px;
-  border-radius: 10px;
-  margin-top: 10px;
+  margin: 15px auto 0;
+  background: linear-gradient(135deg, var(--first), #01497c);
+  width: 180px;
+  border-radius: 12px;
   display: flex;
-  justify-content: space-around;
+  justify-content: space-between;
+  align-items: center;
   color: white;
-  padding: 10px;
+  padding: 12px 20px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+.info::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.1), transparent);
+  transform: translateX(-100%);
+  transition: transform 0.4s ease;
+}
+.info:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
+}
+.info:hover::before {
+  transform: translateX(0);
+}
+.info:hover .info-icon {
+  transform: rotate(10deg) scale(1.1);
+}
+.info .info-text {
+  font-weight: 500;
+  font-size: 0.95rem;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+}
+.info .info-icon {
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-size: 1.2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.15);
+}
+.info .info-icon:hover {
+  background: rgba(255, 255, 255, 0.25);
+  transform: rotate(15deg) scale(1.15);
+}
+.info .info-icon:active {
+  transform: scale(0.95);
 }
 
 .the {
@@ -116,4 +394,77 @@ html {
 }
 .bar {
   color: white;
+}
+
+/* Remembrances Section Styling */
+.remembrance-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.remembrance-item {
+  background: rgba(255, 255, 255, 0.9);
+  border-radius: 12px;
+  padding: 20px;
+  margin-bottom: 20px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  border-right: 4px solid var(--fifth);
+}
+
+.remembrance-item:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+}
+
+.remembrance-item p {
+  font-size: 1.2rem;
+  color: #333;
+  line-height: 1.8;
+  margin-bottom: 15px;
+  text-align: right;
+  font-weight: 500;
+}
+
+.remembrance-item .repeat {
+  display: inline-block;
+  background: var(--fifth);
+  color: white;
+  padding: 5px 15px;
+  border-radius: 20px;
+  font-size: 0.9rem;
+  margin-top: 10px;
+}
+
+h2 {
+  color: var(--fifth);
+  font-weight: 700;
+  position: relative;
+  padding-bottom: 10px;
+  margin-bottom: 30px;
+}
+
+h2::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  width: 100px;
+  height: 4px;
+  background: var(--fifth);
+  border-radius: 2px;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .remembrance-item {
+    padding: 15px;
+  }
+  .remembrance-item p {
+    font-size: 1.1rem;
+  }
+  h2 {
+    font-size: 1.8rem;
+  }
 }/*# sourceMappingURL=main.css.map */
