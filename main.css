@@ -406,6 +406,7 @@ ul li {
 }
 
 .info {
+  font-size: 20px;
   margin: 15px auto 0;
   background: linear-gradient(135deg, var(--first), #01497c);
   width: 180px;
@@ -556,7 +557,7 @@ h2::after {
   }
 }
 .num {
-  font-size: 2.6rem !important; /* Increased size with important */
+  font-size: 2rem !important; /* Increased size with important */
   font-weight: 800 !important;
   color: #2c3e50 !important;
   margin: 0 15px !important;
