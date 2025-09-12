@@ -62,9 +62,29 @@ html {
     .pray {
         color: #1a73e8; /* Bright blue for Fajr */
         font-weight: 600;
+        font-size: 1.5rem; /* Increased font size */
+        line-height: 1.4; /* Better line spacing */
     }
     .plus, .minus {
         color: #1a73e8; /* Matching Fajr blue */
+        font-size: 1.8rem; /* Larger size */
+        width: 40px;
+        height: 40px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        border-radius: 8px;
+        transition: all 0.2s ease;
+        
+        &:hover {
+            background: rgba(26, 115, 232, 0.1);
+            transform: scale(1.1);
+        }
+        
+        &:active {
+            transform: scale(0.95);
+        }
     }
 }
 
@@ -72,10 +92,30 @@ html {
     .pray {
         color: #0b8043; /* Green for Dhuhr */
         font-weight: 600;
+        font-size: 1.5rem; /* Increased font size */
+        line-height: 1.4; /* Better line spacing */
 
     }
     .plus, .minus {
         color: #0b8043; /* Matching Dhuhr green */
+        font-size: 1.8rem;
+        width: 40px;
+        height: 40px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        border-radius: 8px;
+        transition: all 0.2s ease;
+        
+        &:hover {
+            background: rgba(11, 128, 67, 0.1);
+            transform: scale(1.1);
+        }
+        
+        &:active {
+            transform: scale(0.95);
+        }
     }
 }
 
@@ -83,9 +123,29 @@ html {
     .pray {
         color: #f6bf26; /* Gold for Asr */
         font-weight: 600;
+        font-size: 1.5rem; /* Increased font size */
+        line-height: 1.4; /* Better line spacing */
     }
     .plus, .minus {
         color: #f6bf26; /* Matching Asr gold */
+        font-size: 1.8rem;
+        width: 40px;
+        height: 40px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        border-radius: 8px;
+        transition: all 0.2s ease;
+        
+        &:hover {
+            background: rgba(246, 191, 38, 0.1);
+            transform: scale(1.1);
+        }
+        
+        &:active {
+            transform: scale(0.95);
+        }
     }
 }
 
@@ -93,9 +153,29 @@ html {
     .pray {
         color: #e67c73; /* Coral for Maghrib */
         font-weight: 600;
+        font-size: 1.5rem; /* Increased font size */
+        line-height: 1.4; /* Better line spacing */
     }
     .plus, .minus {
         color: #e67c73; /* Matching Maghrib coral */
+        font-size: 1.8rem;
+        width: 40px;
+        height: 40px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        border-radius: 8px;
+        transition: all 0.2s ease;
+        
+        &:hover {
+            background: rgba(230, 124, 115, 0.1);
+            transform: scale(1.1);
+        }
+        
+        &:active {
+            transform: scale(0.95);
+        }
     }
 }
 
@@ -103,9 +183,29 @@ html {
     .pray {
         color: #8e24aa; /* Purple for Isha */
         font-weight: 600;
+        font-size: 1.5rem; /* Increased font size */
+        line-height: 1.4; /* Better line spacing */
     }
     .plus, .minus {
         color: #8e24aa; /* Matching Isha purple */
+        font-size: 1.8rem;
+        width: 40px;
+        height: 40px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        border-radius: 8px;
+        transition: all 0.2s ease;
+        
+        &:hover {
+            background: rgba(142, 36, 170, 0.1);
+            transform: scale(1.1);
+        }
+        
+        &:active {
+            transform: scale(0.95);
+        }
     }
 }
 
@@ -243,6 +343,9 @@ ul li{
     transition: all 0.3s ease;
     position: relative;
     overflow: hidden;
+    font-size: 1.4rem; /* Increased font size */
+    text-align: center;
+    padding: 15px;
     
     &::before {
         content: '';
@@ -266,24 +369,17 @@ ul li{
         }
         
         .num {
-            font-size: 2.5rem;
-            font-weight: 700;
-            color: white;
-            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-            position: relative;
-            z-index: 1;
-            transition: transform 0.3s ease;
+            font-size: 4rem !important; /* Larger on hover with important */
+            font-weight: 800 !important;
+            color: #ffffff !important;
+            text-shadow: 0 4px 10px rgba(0, 0, 0, 0.4) !important;
+            position: relative !important;
+            text-align: center !important;
+            min-width: 70px !important; /* Slightly wider for larger numbers */
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif !important;
+            z-index: 1 !important;
+            line-height: 1.2 !important;
         }
-    }
-    
-    .num {
-        font-size: 2.5rem;
-        font-weight: 700;
-        color: white;
-        text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-        position: relative;
-        z-index: 1;
-        transition: transform 0.3s ease;
     }
     
     .plus, .minus {
@@ -503,4 +599,16 @@ h2::after {
     h2 {
         font-size: 1.8rem;
     }
+}
+.num {
+    font-size: 2.6rem !important; /* Increased size with important */
+    font-weight: 800 !important;
+    color: #2c3e50 !important;
+    margin: 0 15px !important;
+    min-width: 70px !important;
+    text-align: center !important;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif !important;
+    text-shadow: 0 2px 4px rgba(0,0,0,0.15) !important;
+    transition: all 0.2s ease !important;
+    line-height: 1.2 !important;
 }
