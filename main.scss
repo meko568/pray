@@ -330,14 +330,14 @@ ul li{
     flex-wrap: nowrap !important;
 }
 .circle {
-    border-radius:10px;
+    border-radius:50%;
     color: white;
     display: flex;
     justify-content: center;
     align-items: center;
     width: 150px;
     height: 150px;
-    background: linear-gradient(135deg, var(--seocnd), #01497c);
+    background: linear-gradient(135deg, #90e0ef, #0077b6);
     margin: 0 auto 15px;
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
     transition: all 0.3s ease;
@@ -443,7 +443,7 @@ ul li{
     font-size: 20px;
     margin: 15px auto 0;
     background: linear-gradient(135deg, var(--first), #01497c);
-    width: 180px;
+    width: 160px;
     border-radius: 12px;
     display: flex;
     justify-content: space-between;
@@ -510,16 +510,21 @@ ul li{
 }
 
 .the {
-    display: flex;
-    justify-content: space-around;
-    margin-top: 10px;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+    margin-top: 20px;
+    margin: auto !important;
 }
 
 @media (max-width:767px) {
     .the {
-        flex-direction: column;
-        gap: 10px;
-        margin: auto;
+        grid-template-columns: 1fr 1fr;
+    }
+}
+@media (max-width:340px) {
+    .the {
+        grid-template-columns: 1fr;
     }
 }
 
@@ -612,4 +617,8 @@ h2::after {
     text-shadow: 0 2px 4px rgba(0,0,0,0.15) !important;
     transition: all 0.2s ease !important;
     line-height: 1.2 !important;
+}
+.container{
+    padding: 0 !important;
+    margin-top: 10px !important;
 }
