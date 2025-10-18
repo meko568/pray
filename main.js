@@ -619,8 +619,68 @@ function loadCounters() {
     });
 }
 
+// Show Salawat notification
+function showSalawatNotification() {
+    // Check if the browser supports notifications
+    if (!('Notification' in window)) {
+        console.log('This browser does not support desktop notification');
+        return;
+    }
+
+    // Check if notification permissions have already been granted
+    if (Notification.permission === 'granted') {
+        // Create a notification
+        const notification = new Notification('اللهم صل على محمد', {
+            body: 'اللهم صل وسلم وبارك على سيدنا محمد',
+            icon: 'icon-192x192.png',
+            dir: 'rtl',
+            lang: 'ar',
+            tag: 'salawat-reminder',
+            requireInteraction: true // Keep notification visible until clicked
+        });
+        
+        // Play a subtle sound when notification appears (optional)
+        playNotification();
+    }
+    // Otherwise, ask the user for permission
+    else if (Notification.permission !== 'denied') {
+        Notification.requestPermission().then(permission => {
+            if (permission === 'granted') {
+                showSalawatNotification();
+            }
+        });
+    }
+}
+
+// Schedule Salawat notifications every 10 minutes
+let salawatInterval;
+
+function startSalawatReminder() {
+    // Show first notification immediately
+    showSalawatNotification();
+    
+    // Then show every 10 minutes (600,000 milliseconds)
+    salawatInterval = setInterval(showSalawatNotification, 10 * 60 * 1000);
+}
+
+// Stop the reminder (in case you want to add a way to disable it)
+function stopSalawatReminder() {
+    if (salawatInterval) {
+        clearInterval(salawatInterval);
+    }
+}
+
 // Add touch event support for mobile
 document.addEventListener('DOMContentLoaded', function() {
+    // Request notification permission when the app loads
+    if ('Notification' in window) {
+        Notification.requestPermission().then(permission => {
+            if (permission === 'granted') {
+                startSalawatReminder();
+            }
+        });
+    }
+    
     // Initialize counters for tasbeeh page if we're on main2.html
     if (window.location.pathname.endsWith('main2.html')) {
         // Load saved counters
