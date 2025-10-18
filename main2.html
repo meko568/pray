@@ -36,24 +36,39 @@
     </nav>
     <div class="container the">
         <div class="main-circle">
-            <div class="circle one">اللهم صل علي محمد</div>
+            <div class="circle one" onclick="increment('one')">
+                <span class="circle-text">اللهم صل علي محمد</span>
+            </div>
             <div class="info">
-                <div class="number one">0</div>
-                <div class="clear one">اعاده</div>
+                <div class="counter-buttons">
+                    <div class="number one">0</div>
+                    <button class="counter-btn plus" onclick="increment('one')">+</button>
+                </div>
+                <button class="clear one" onclick="resetCounter('one')">اعاده</button>
             </div>
         </div>
         <div class="main-circle">
-            <div class="circle two">تسبيح</div>
+            <div class="circle two" onclick="increment('two')">
+                <span class="circle-text">تسبيح</span>
+            </div>
             <div class="info">
-                <div class="number two">0</div>
-                <div class="clear two">اعاده</div>
+                <div class="counter-buttons">
+                    <div class="number two">0</div>
+                    <button class="counter-btn plus" onclick="increment('two')">+</button>
+                </div>
+                <button class="clear two" onclick="resetCounter('two')">اعاده</button>
             </div>
         </div>
         <div class="main-circle">
-            <div class="circle three">أسماء الله الحسني</div>
+            <div class="circle three" onclick="increment('three')">
+                <span class="circle-text">أسماء الله الحسني</span>
+            </div>
             <div class="info">
-                <div class="number three">0</div>
-                <div class="clear three">اعاده</div>
+                <div class="counter-buttons">
+                    <div class="number three">0</div>
+                    <button class="counter-btn plus" onclick="increment('three')">+</button>
+                </div>
+                <button class="clear three" onclick="resetCounter('three')">اعاده</button>
             </div>
         </div>
     </div>
