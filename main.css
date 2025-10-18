@@ -1,219 +1,230 @@
 :root {
-  --first: #cdb4db;
-  --seocnd: #d4a373;
-  --third: #a3b18a;
-  --fourth: #778da9;
-  --fifth: #00b4d8;
+  --fajr: #1a73e8;     /* Blue for Fajr */
+  --dhuhr: #0b8043;    /* Green for Dhuhr */
+  --asr: #f6bf26;      /* Gold for Asr */
+  --maghrib: #e67c73;  /* Coral for Maghrib */
+  --isha: #8e24aa;     /* Purple for Isha */
+  --text: #2c3e50;     /* Dark gray for text */
+  --bg: #f8f9fa;       /* Light gray for background */
+  --card-bg: #ffffff;  /* White for cards */
+  --shadow: rgba(0, 0, 0, 0.1);
+  --border: rgba(0, 0, 0, 0.1);
 }
 
-html {
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: var(--bg);
+  color: var(--text);
+  margin: 0;
+  padding: 0;
   direction: rtl;
   text-align: right;
-  scroll-behavior: smooth;
+  line-height: 1.6;
 }
 
-.mainpray {
-  position: relative;
-  width: 100%;
-  max-width: 500px;
-  margin: 15px auto;
-  border-radius: 12px;
-  background: linear-gradient(135deg, #ffffff 0%, #f5f9ff 100%), url("data:image/svg+xml,%3Csvg width='80' height='80' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23c9d8f0' fill-opacity='0.15'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
-  border: 1px solid rgba(220, 230, 250, 0.8);
-  overflow: hidden;
-  transition: all 0.3s ease;
-  color: #2c3e50;
+.container {
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 20px 15px;
 }
+
+/* Current Time Styles */
+.current-time {
+  text-align: center;
+  margin-bottom: 30px;
+  background: var(--card-bg);
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: 0 4px 6px var(--shadow);
+  margin-bottom: 25px;
+}
+
+#current-time {
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: var(--text);
+  margin: 10px 0;
+  font-family: 'Digital-7', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+#date {
+  color: #666;
+  font-size: 1.2rem;
+  margin: 0;
+}
+
+/* Prayer Time Cards */
+.mainpray {
+  background: var(--card-bg);
+  border-radius: 12px;
+  box-shadow: 0 4px 6px var(--shadow);
+  margin-bottom: 15px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  border-right: 4px solid transparent;
+}
+
 .mainpray:hover {
   transform: translateY(-3px);
-  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
-  background: linear-gradient(135deg, #ffffff 0%, #eef5ff 100%), url("data:image/svg+xml,%3Csvg width='80' height='80' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23b8d0f0' fill-opacity='0.1'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
-  border-color: rgba(200, 220, 250, 0.9);
-}
-@media (max-width: 767px) {
-  .mainpray {
-    width: 95% !important;
-    margin: 10px auto;
-  }
-  .mainpray .text {
-    padding: 20px 15px;
-    gap: 15px;
-  }
-  .mainpray .num {
-    font-size: 1.8rem;
-    padding: 4px 12px;
-  }
-  .mainpray .plus, .mainpray .minus {
-    width: 36px;
-    height: 36px;
-    font-size: 1.1rem;
-  }
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
 }
 
-.mainpray.first .pray {
-  color: #1a73e8; /* Bright blue for Fajr */
-  font-weight: 600;
-  font-size: 1.5rem; /* Increased font size */
-  line-height: 1.4; /* Better line spacing */
-}
-.mainpray.first .plus, .mainpray.first .minus {
-  color: #1a73e8; /* Matching Fajr blue */
-  font-size: 1.8rem; /* Larger size */
-  width: 40px;
-  height: 40px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  border-radius: 8px;
-  transition: all 0.2s ease;
-}
-.mainpray.first .plus:hover, .mainpray.first .minus:hover {
-  background: rgba(26, 115, 232, 0.1);
-  transform: scale(1.1);
-}
-.mainpray.first .plus:active, .mainpray.first .minus:active {
-  transform: scale(0.95);
+.mainpray.current-prayer {
+  border-right-color: var(--current-color);
+  background: linear-gradient(to left, rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.7));
+  position: relative;
+  overflow: hidden;
 }
 
-.mainpray.second .pray {
-  color: #0b8043; /* Green for Dhuhr */
-  font-weight: 600;
-  font-size: 1.5rem; /* Increased font size */
-  line-height: 1.4; /* Better line spacing */
-}
-.mainpray.second .plus, .mainpray.second .minus {
-  color: #0b8043; /* Matching Dhuhr green */
-  font-size: 1.8rem;
-  width: 40px;
-  height: 40px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  border-radius: 8px;
-  transition: all 0.2s ease;
-}
-.mainpray.second .plus:hover, .mainpray.second .minus:hover {
-  background: rgba(11, 128, 67, 0.1);
-  transform: scale(1.1);
-}
-.mainpray.second .plus:active, .mainpray.second .minus:active {
-  transform: scale(0.95);
-}
-
-.mainpray.third .pray {
-  color: #f6bf26; /* Gold for Asr */
-  font-weight: 600;
-  font-size: 1.5rem; /* Increased font size */
-  line-height: 1.4; /* Better line spacing */
-}
-.mainpray.third .plus, .mainpray.third .minus {
-  color: #f6bf26; /* Matching Asr gold */
-  font-size: 1.8rem;
-  width: 40px;
-  height: 40px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  border-radius: 8px;
-  transition: all 0.2s ease;
-}
-.mainpray.third .plus:hover, .mainpray.third .minus:hover {
-  background: rgba(246, 191, 38, 0.1);
-  transform: scale(1.1);
-}
-.mainpray.third .plus:active, .mainpray.third .minus:active {
-  transform: scale(0.95);
-}
-
-.mainpray.fourth .pray {
-  color: #e67c73; /* Coral for Maghrib */
-  font-weight: 600;
-  font-size: 1.5rem; /* Increased font size */
-  line-height: 1.4; /* Better line spacing */
-}
-.mainpray.fourth .plus, .mainpray.fourth .minus {
-  color: #e67c73; /* Matching Maghrib coral */
-  font-size: 1.8rem;
-  width: 40px;
-  height: 40px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  border-radius: 8px;
-  transition: all 0.2s ease;
-}
-.mainpray.fourth .plus:hover, .mainpray.fourth .minus:hover {
-  background: rgba(230, 124, 115, 0.1);
-  transform: scale(1.1);
-}
-.mainpray.fourth .plus:active, .mainpray.fourth .minus:active {
-  transform: scale(0.95);
-}
-
-.mainpray.fifth .pray {
-  color: #8e24aa; /* Purple for Isha */
-  font-weight: 600;
-  font-size: 1.5rem; /* Increased font size */
-  line-height: 1.4; /* Better line spacing */
-}
-.mainpray.fifth .plus, .mainpray.fifth .minus {
-  color: #8e24aa; /* Matching Isha purple */
-  font-size: 1.8rem;
-  width: 40px;
-  height: 40px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  border-radius: 8px;
-  transition: all 0.2s ease;
-}
-.mainpray.fifth .plus:hover, .mainpray.fifth .minus:hover {
-  background: rgba(142, 36, 170, 0.1);
-  transform: scale(1.1);
-}
-.mainpray.fifth .plus:active, .mainpray.fifth .minus:active {
-  transform: scale(0.95);
+.mainpray.current-prayer::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 5px;
+  height: 100%;
+  background: var(--current-color);
 }
 
 .mainpray .text {
+  padding: 20px 25px;
   display: flex;
-  align-items: center;
   justify-content: space-between;
-  padding: 25px 30px;
+  align-items: center;
   position: relative;
-  z-index: 2;
-  background: white;
-  color: #2c3e50;
-  gap: 20px;
 }
 
+.mainpray .pray {
+  font-size: 1.4rem;
+  font-weight: 600;
+  margin: 0;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.mainpray .pray::before {
+  content: '';
+  display: inline-block;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: var(--prayer-color);
+  margin-left: 8px;
+}
+
+/* Prayer-specific colors */
+.mainpray.first .pray { --current-color: var(--fajr); color: var(--fajr); }
+.mainpray.second .pray { --current-color: var(--dhuhr); color: var(--dhuhr); }
+.mainpray.third .pray { --current-color: var(--asr); color: var(--asr); }
+.mainpray.fourth .pray { --current-color: var(--maghrib); color: var(--maghrib); }
+.mainpray.fifth .pray { --current-color: var(--isha); color: var(--isha); }
+
+.mainpray .pray span {
+  font-family: 'Digital-7', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--text);
+  background: rgba(0, 0, 0, 0.03);
+  padding: 3px 12px;
+  border-radius: 20px;
+  min-width: 80px;
+  text-align: center;
+  direction: ltr;
+  display: inline-block;
+}
+
+/* Location text */
+.location {
+  text-align: center;
+  margin-top: 25px;
+  color: #666;
+  font-size: 0.95rem;
+}
+
+/* Navbar styles */
 .navbar {
   background: linear-gradient(135deg, #00b4d8 0%, #0077b6 100%);
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
   padding: 0.8rem 1rem;
-  transition: all 0.3s ease;
+  margin-bottom: 25px;
+}
+
+.navbar-brand, .nav-link {
+  color: white !important;
+  font-weight: 500;
+}
+
+.nav-link.active {
+  font-weight: 600;
+  position: relative;
+}
+
+.nav-link.active::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  right: 0.5rem;
+  left: 0.5rem;
+  height: 3px;
+  background: white;
+  border-radius: 3px;
+}
+
+/* Responsive styles */
+@media (max-width: 768px) {
+  .container {
+    padding: 15px 10px;
+  }
+  
+  #current-time {
+    font-size: 2.2rem;
+  }
+  
+  #date {
+    font-size: 1rem;
+  }
+  
+  .mainpray .pray {
+    font-size: 1.3rem;
+  }
+  
+  .mainpray .pray span {
+    font-size: 1.3rem;
+    min-width: 70px;
+    padding: 2px 10px;
+  }
+  
+  .mainpray .text {
+    padding: 18px 20px;
+  }
+}
+
+/* Animation for current prayer */
+@keyframes pulse {
+  0% { box-shadow: 0 0 0 0 rgba(0, 0, 0, 0.1); }
+  70% { box-shadow: 0 0 0 10px rgba(0, 0, 0, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(0, 0, 0, 0); }
+}
+
+.mainpray.current-prayer {
+  animation: pulse 2s infinite;
   border-end-start-radius: 6px;
   border-end-end-radius: 6px;
 }
 
 .nav-item {
-  transition: 0.5s;
+  transition: all 0.3s ease;
+  margin: 0 5px;
 }
 
 .nav-link {
-  color: rgba(255, 255, 255, 0.9) !important;
-  font-weight: 500;
+  color: white !important;
   padding: 0.5rem 1.2rem !important;
+  position: relative;
+  font-weight: 500;
   margin: 0 0.2rem;
   border-radius: 8px;
   transition: all 0.3s ease !important;
-  position: relative;
   overflow: hidden;
 }
 
