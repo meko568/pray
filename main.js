@@ -76,6 +76,7 @@ function getPrayerTimes() {
                         
                         // Update prayer times
                         document.getElementById('fajr-time').textContent = formatTime(timings.Fajr);
+                        document.getElementById('sunrise-time').textContent = formatTime(timings.Sunrise);
                         document.getElementById('dhuhr-time').textContent = formatTime(timings.Dhuhr);
                         document.getElementById('asr-time').textContent = formatTime(timings.Asr);
                         document.getElementById('maghrib-time').textContent = formatTime(timings.Maghrib);
@@ -122,6 +123,7 @@ function getDefaultPrayerTimes() {
                 const timings = data.data.timings;
                 
                 document.getElementById('fajr-time').textContent = formatTime(timings.Fajr);
+                document.getElementById('sunrise-time').textContent = formatTime(timings.Sunrise);
                 document.getElementById('dhuhr-time').textContent = formatTime(timings.Dhuhr);
                 document.getElementById('asr-time').textContent = formatTime(timings.Asr);
                 document.getElementById('maghrib-time').textContent = formatTime(timings.Maghrib);
@@ -149,46 +151,170 @@ function formatTime(time24) {
     return date.toLocaleTimeString('ar-EG', { hour: '2-digit', minute: '2-digit' });
 }
 
-// Highlight the current prayer
+// Format time remaining
+function formatTimeRemaining(minutes) {
+    if (minutes < 0) return '';
+    const hours = Math.floor(minutes / 60);
+    const mins = minutes % 60;
+    if (hours > 0) {
+        return ` (${hours} ساعة و ${mins} دقيقة)`;
+    }
+    return ` (${mins} دقيقة)`;
+}
+
+// Calculate time until next prayer and update display
+function updateTimeUntilNextPrayer(timings) {
+    const now = new Date();
+    const currentTime = now.getHours() * 60 + now.getMinutes();
+    
+    // Define prayer times in order
+    const prayers = [
+        { id: 'fajr-time', time: timings.Fajr, name: 'الفجر' },
+        { id: 'sunrise-time', time: timings.Sunrise, name: 'الشروق' },
+        { id: 'dhuhr-time', time: timings.Dhuhr, name: 'الظهر' },
+        { id: 'asr-time', time: timings.Asr, name: 'العصر' },
+        { id: 'maghrib-time', time: timings.Maghrib, name: 'المغرب' },
+        { id: 'isha-time', time: timings.Isha, name: 'العشاء' }
+    ];
+    
+    // Find next prayer
+    let nextPrayer = null;
+    for (let i = 0; i < prayers.length; i++) {
+        const prayerTime = prayers[i].time.split(':');
+        const prayerMinutes = parseInt(prayerTime[0]) * 60 + parseInt(prayerTime[1]);
+        
+        if (currentTime < prayerMinutes) {
+            nextPrayer = { ...prayers[i], minutesUntil: prayerMinutes - currentTime };
+            break;
+        }
+    }
+    
+    // If no next prayer found (after Isha), use Fajr of next day
+    if (!nextPrayer && prayers.length > 0) {
+        const prayerTime = prayers[0].time.split(':');
+        const prayerMinutes = (24 * 60) + (parseInt(prayerTime[0]) * 60 + parseInt(prayerTime[1]));
+        nextPrayer = { 
+            ...prayers[0], 
+            minutesUntil: prayerMinutes - currentTime,
+            nextDay: true 
+        };
+    }
+    
+    // Update all prayer time displays
+    prayers.forEach(prayer => {
+        const element = document.getElementById(prayer.id);
+        if (element) {
+            // Remove any existing countdown text
+            const currentText = element.textContent.split(' (')[0];
+            element.textContent = currentText;
+            
+            // Add countdown to next prayer
+            if (nextPrayer && prayer.id === nextPrayer.id) {
+                const timeRemaining = nextPrayer.nextDay 
+                    ? nextPrayer.minutesUntil - (24 * 60)
+                    : nextPrayer.minutesUntil;
+                element.textContent = currentText + formatTimeRemaining(timeRemaining);
+            }
+        }
+    });
+    
+    return nextPrayer;
+}
+
+// Highlight the current prayer and update countdowns
 function highlightCurrentPrayer(timings) {
     const now = new Date();
     const currentTime = now.getHours() * 60 + now.getMinutes();
     
     // Reset all highlights
     document.querySelectorAll('.mainpray').forEach(el => {
-        el.classList.remove('current-prayer');
+        el.classList.remove('current-prayer', 'next-prayer');
     });
     
-    // Define prayer times in order
+    // Define prayer times in order (excluding sunrise from next prayer highlight)
     const prayers = [
-        { id: 'fajr-time', time: timings.Fajr },
-        { id: 'dhuhr-time', time: timings.Dhuhr },
-        { id: 'asr-time', time: timings.Asr },
-        { id: 'maghrib-time', time: timings.Maghrib },
-        { id: 'isha-time', time: timings.Isha }
+        { id: 'fajr-time', time: timings.Fajr, isPrayer: true },
+        { id: 'sunrise-time', time: timings.Sunrise, isPrayer: false },
+        { id: 'dhuhr-time', time: timings.Dhuhr, isPrayer: true },
+        { id: 'asr-time', time: timings.Asr, isPrayer: true },
+        { id: 'maghrib-time', time: timings.Maghrib, isPrayer: true },
+        { id: 'isha-time', time: timings.Isha, isPrayer: true }
     ];
     
-    // Find current prayer
+    // Find current and next prayer
     let currentPrayer = null;
+    let nextPrayer = null;
+    
     for (let i = 0; i < prayers.length; i++) {
-        const prayerTime = prayers[i].time.split(':');
+        const prayer = prayers[i];
+        const prayerTime = prayer.time.split(':');
         const prayerMinutes = parseInt(prayerTime[0]) * 60 + parseInt(prayerTime[1]);
         
-        if (currentTime < prayerMinutes) {
-            currentPrayer = prayers[i];
-            break;
+        // Only consider it as next prayer if it's an actual prayer time (not sunrise)
+        if (currentTime < prayerMinutes && !nextPrayer && prayer.isPrayer) {
+            nextPrayer = prayer;
+        }
+        
+        if (i > 0) {
+            const prevPrayer = prayers[i-1];
+            const prevPrayerTime = prevPrayer.time.split(':');
+            const prevPrayerMinutes = parseInt(prevPrayerTime[0]) * 60 + parseInt(prevPrayerTime[1]);
+            
+            // Only set as current prayer if it's an actual prayer time (not sunrise)
+            if (currentTime >= prevPrayerMinutes && currentTime < prayerMinutes && prevPrayer.isPrayer) {
+                currentPrayer = prevPrayer;
+            }
         }
     }
     
-    // If no current prayer found (after Isha), highlight Fajr of next day
-    if (!currentPrayer) {
+    // Check if current time is after last prayer of the day
+    if (!currentPrayer && prayers.length > 0) {
+        const lastPrayerTime = prayers[prayers.length - 1].time.split(':');
+        const lastPrayerMinutes = parseInt(lastPrayerTime[0]) * 60 + parseInt(lastPrayerTime[1]);
+        
+        if (currentTime >= lastPrayerMinutes) {
+            currentPrayer = prayers[prayers.length - 1];
+            nextPrayer = prayers[0];
+        }
+    }
+    
+    // If no current prayer found (shouldn't happen), default to first prayer
+    if (!currentPrayer && prayers.length > 0) {
         currentPrayer = prayers[0];
     }
     
-    // Highlight the current prayer
-    const prayerElement = document.getElementById(currentPrayer.id).closest('.mainpray');
-    if (prayerElement) {
-        prayerElement.classList.add('current-prayer');
+    // Highlight the current prayer and next prayer
+    if (currentPrayer) {
+        const currentElement = document.getElementById(currentPrayer.id)?.closest('.mainpray');
+        if (currentElement) {
+            currentElement.classList.add('current-prayer');
+        }
+    }
+    
+    // Add next-prayer class to the next prayer
+    if (nextPrayer) {
+        const nextElement = document.getElementById(nextPrayer.id)?.closest('.mainpray');
+        if (nextElement) {
+            nextElement.classList.add('next-prayer');
+        }
+    }
+    
+    // Update countdown for next prayer
+    if (nextPrayer) {
+        const nextPrayerTime = nextPrayer.time.split(':');
+        const nextPrayerMinutes = parseInt(nextPrayerTime[0]) * 60 + parseInt(nextPrayerTime[1]);
+        let minutesUntil = nextPrayerMinutes - currentTime;
+        
+        // If next prayer is tomorrow
+        if (minutesUntil < 0) {
+            minutesUntil += 24 * 60; // Add 24 hours
+        }
+        
+        const nextPrayerElement = document.getElementById(nextPrayer.id);
+        if (nextPrayerElement) {
+            const currentText = nextPrayerElement.textContent.split(' (')[0];
+            nextPrayerElement.textContent = currentText + formatTimeRemaining(minutesUntil);
+        }
     }
 }
 

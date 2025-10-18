@@ -22,9 +22,9 @@ body {
   line-height: 1.6;
 }
 
-.container {
+.navbar .container {
   max-width: 600px;
-  margin: 0 auto;
+  margin: 0 !important;
   padding: 20px 15px;
 }
 
@@ -53,6 +53,47 @@ body {
   margin: 0;
 }
 
+/* Sticky category links */
+.catogery {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    padding: 10px 0;
+    background-color: var(--card-bg);
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    margin: 0;
+    list-style: none;
+}
+
+.catogery .nav-link {
+    padding: 8px 15px;
+    border-radius: 20px;
+    background-color: #f0f0f0;
+    color: var(--text);
+    text-decoration: none;
+    transition: all 0.3s ease;
+}
+
+.catogery .nav-link:hover,
+.catogery .nav-link:focus {
+    background-color: var(--primary-color, #4a90e2);
+    color: white;
+}
+
+/* Adjust the spacing for the sections */
+#morning-section,
+#evening-section {
+    scroll-margin-top: 60px; /* Height of the sticky header */
+}
+
+#morning-section h2,
+#evening-section h2 {
+    margin-top: 20px;
+}
+
 /* Prayer Time Cards */
 .mainpray {
   background: var(--card-bg);
@@ -60,7 +101,25 @@ body {
   box-shadow: 0 4px 6px var(--shadow);
   margin-bottom: 15px;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
+  border: none;
+}
+
+/* Sunrise Card Styling - More subtle appearance */
+.sunrise.mainpray {
+  --prayer-color: #e67e22; /* Orange color for sunrise */
+  background: transparent;
   border-right: 4px solid transparent;
+  box-shadow: none;
+}
+
+.sunrise.mainpray .pray::before {
+  background: var(--prayer-color);
+  content: '';
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  margin-left: 8px;
 }
 
 .mainpray:hover {
@@ -69,10 +128,44 @@ body {
 }
 
 .mainpray.current-prayer {
-  border-right-color: var(--current-color);
+  border: none;
   background: linear-gradient(to left, rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.7));
   position: relative;
   overflow: hidden;
+  box-shadow: 0 0 0 2px var(--current-color);
+}
+
+/* Next prayer highlight */
+.mainpray.next-prayer {
+  position: relative;
+  border-right: 4px solid #2dd4bf; /* Teal color for next prayer */
+  background: linear-gradient(135deg, rgba(236, 253, 245, 0.7), rgba(209, 250, 229, 0.7));
+  animation: pulse 2s infinite;
+  box-shadow: 0 2px 8px rgba(45, 212, 191, 0.2);
+}
+
+@keyframes pulse {
+  0% {
+    box-shadow: 0 0 0 0 rgba(45, 212, 191, 0.4);
+  }
+  70% {
+    box-shadow: 0 0 0 5px rgba(45, 212, 191, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(45, 212, 191, 0);
+  }
+}
+
+/* Next prayer indicator dot */
+.mainpray.next-prayer .pray::before {
+  content: '';
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  background-color: #2dd4bf;
+  border-radius: 50%;
+  margin-left: 8px;
+  animation: pulse 2s infinite;
 }
 
 .mainpray.current-prayer::before {
@@ -98,8 +191,23 @@ body {
   font-weight: 600;
   margin: 0;
   display: flex;
+  justify-content: space-between;
   align-items: center;
-  gap: 10px;
+  padding: 10px 0;
+  border-bottom: 1px solid var(--border);
+}
+
+/* Sunrise specific styling */
+.pray.sunrise {
+  font-size: 1.2rem;
+  color: #e67e22; /* Orange color for sunrise */
+  padding: 8px 0 12px 0;
+  border-bottom: none;
+}
+
+/* Fajr section - make consistent with other prayers */
+.first .text {
+  padding: 20px 25px;
 }
 
 .mainpray .pray::before {
@@ -113,11 +221,48 @@ body {
 }
 
 /* Prayer-specific colors */
-.mainpray.first .pray { --current-color: var(--fajr); color: var(--fajr); }
-.mainpray.second .pray { --current-color: var(--dhuhr); color: var(--dhuhr); }
-.mainpray.third .pray { --current-color: var(--asr); color: var(--asr); }
-.mainpray.fourth .pray { --current-color: var(--maghrib); color: var(--maghrib); }
-.mainpray.fifth .pray { --current-color: var(--isha); color: var(--isha); }
+.mainpray.first .pray { 
+  --current-color: var(--fajr); 
+  color: var(--fajr); 
+}
+
+.mainpray.second .pray { 
+  --current-color: var(--dhuhr); 
+  color: var(--dhuhr); 
+}
+
+.mainpray.third .pray { 
+  --current-color: var(--asr); 
+  color: var(--asr); 
+}
+
+.mainpray.fourth .pray { 
+  --current-color: var(--maghrib); 
+  color: var(--maghrib); 
+}
+
+.mainpray.fifth .pray { 
+  --current-color: var(--isha); 
+  color: var(--isha); 
+}
+
+/* Add colored circles to all prayer times */
+.mainpray .pray::before {
+  content: '';
+  display: inline-block;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  margin-left: 8px;
+  background: var(--current-color);
+}
+
+/* Specific colors for each prayer time */
+.mainpray.first .pray::before { background: var(--fajr); }
+.mainpray.second .pray::before { background: var(--dhuhr); }
+.mainpray.third .pray::before { background: var(--asr); }
+.mainpray.fourth .pray::before { background: var(--maghrib); }
+.mainpray.fifth .pray::before { background: var(--isha); }
 
 .mainpray .pray span {
   font-family: 'Digital-7', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -341,14 +486,40 @@ body {
         font-size: 1.5rem;
         padding: 3px 15px;
     }
-    .catogery{
-      margin: 0 !important;
+    .circle{
+      width: 120px !important;
+      height: 120px !important;
+      font-size: 20px !important;
+    }
+    .info{
       padding: 0 !important;
     }
-    .navbar-nav{
-      margin: 0 !important;
-      padding: 0 !important;
-    }
+}
+/* .navbar-toggler{
+  display: none !important;
+}
+.navbar-collapse{
+  display: flex !important;
+  padding: 0 !important;
+} */
+.container-fluid{
+  padding: 0 !important;
+}
+.navbar{
+  padding: 0 !important;
+  padding: 10px 0 !important;
+}
+/* .navbar-collapse ul{
+  flex-direction: row !important;
+  gap:0 !important;
+}
+.navbar-collapse ul li{
+  margin: 0 !important;
+  padding: 0 !important;
+  width: fit-content !important;
+} */
+.circle::selection{
+  background-color: transparent !important;
 }
 .nav-item{
   width: fit-content;
@@ -422,9 +593,79 @@ body {
 }
 
 /* Small devices (landscape phones, 576px and up) */
+/* Navigation styles */
+.navbar {
+    background-color: var(--card-bg);
+    box-shadow: 0 2px 4px var(--shadow);
+    padding: 15px 0;
+    direction: rtl;
+}
+
+.navbar .container {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 0 15px;
+}
+
+.navbar-nav {
+    display: flex;
+    flex-direction: row !important;
+    justify-content: start;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    width: 100%;
+}
+
+.nav-item {
+    flex: 1;
+    text-align: center;
+}
+
+.nav-link {
+    color: var(--text);
+    font-weight: 600;
+    padding: 10px 5px;
+    border-radius: 6px;
+    transition: all 0.3s ease;
+    text-decoration: none;
+    display: block;
+    margin: 0 2px;
+    font-size: 1rem;
+    white-space: nowrap;
+}
+
+.nav-link:hover, 
+.nav-link.active {
+    background-color: #f0f0f0;
+    color: var(--text);
+    transform: translateY(-2px);
+}
+
 @media (max-width: 768px) {
     .container {
         padding: 10px;
+    }
+    
+    .navbar {
+        padding: 10px 0;
+    }
+    
+    .navbar-nav {
+        flex-direction: column;
+        gap: 5px;
+        padding: 0 10px;
+    }
+    
+    .nav-item {
+        width: 100%;
+        margin: 2px 0;
+    }
+    
+    .nav-link {
+        padding: 12px 5px;
+        font-size: 1rem;
+        white-space: normal;
     }
     
     .main-circle {
