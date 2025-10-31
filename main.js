@@ -1,37 +1,66 @@
 // Update current time every second
 function updateCurrentTime() {
     const now = new Date();
-    const options = { 
-        weekday: 'long', 
-        year: 'numeric', 
-        month: 'long', 
-        day: 'numeric',
-        calendar: 'islamic'
-    };
-    
-        // Debug: Log current time and timezone
-    console.log('Current time:', now.toString());
-    console.log('Timezone:', Intl.DateTimeFormat().resolvedOptions().timeZone);
     
     // Format time in 12-hour format with AM/PM
     const timeString = now.toLocaleTimeString('ar-EG', { 
-      hour: '2-digit', 
-      minute: '2-digit', 
-      second: '2-digit',
-      hour12: true  // Show 12-hour format with AM/PM
+        hour: '2-digit', 
+        minute: '2-digit', 
+        second: '2-digit',
+        hour12: true
     });
     
-    console.log('Formatted time string:', timeString); // Debug log
+    // Create a new date object for yesterday
+    const yesterday = new Date(now);
+    yesterday.setDate(now.getDate() - 1);
     
-    // Format date in Arabic
-    const dateString = now.toLocaleDateString('ar-EG-u-ca-islamic', options);
+    // Format the date in Arabic with Islamic calendar
+    const formatter = new Intl.DateTimeFormat('ar-SA-u-ca-islamic', {
+        weekday: 'long',
+        day: 'numeric',
+        month: 'long',
+        year: 'numeric',
+        timeZone: 'Asia/Riyadh'
+    });
+    
+    // Format the date string and ensure it's in the right format
+    let dateString = formatter.format(yesterday);
+    // Replace any 'هـ' that might be duplicated
+    dateString = dateString.replace(/([0-9]) هـ/g, '$1 هـ').replace('هـ', 'هـ');
     
     // Update the display
-    document.getElementById('current-time').textContent = timeString;
-    document.getElementById('date').textContent = dateString;
+    const dateElement = document.getElementById('date');
+    const timeElement = document.getElementById('current-time');
     
-    // Debug: Log what's being displayed
-    console.log('Displayed time:', timeString);
+    if (dateElement) dateElement.textContent = dateString;
+    if (timeElement) timeElement.textContent = timeString;
+}
+
+// Make sure to call updateCurrentTime immediately and then every second
+updateCurrentTime();
+setInterval(updateCurrentTime, 1000);
+
+// Function to convert Gregorian to Islamic date
+function convertToIslamic(date) {
+    // This is a simplified conversion - for production, use a proper library
+    // like 'moment-hijri' or 'hijri-date' for accurate conversion
+    const islamicStart = new Date(622, 6, 16); // Islamic calendar starts on July 16, 622 (Julian)
+    const diffTime = Math.abs(date - islamicStart);
+    const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+    
+    // Approximate conversion (1 Islamic year = 354.367 days)
+    const years = Math.floor(diffDays / 354.367);
+    const remainingDays = diffDays - (years * 354.367);
+    
+    // This is a simplified calculation - actual month lengths vary
+    const months = Math.floor(remainingDays / 29.53);
+    const days = Math.floor(remainingDays % 29.53);
+    
+    return {
+        day: days + 1,  // Adding 1 because the first day is 1, not 0
+        month: (months % 12) + 1,
+        year: years + 1  // Adding 1 because the first year is 1 AH
+    };
 }
 
 // Get prayer times based on user's location
@@ -390,11 +419,15 @@ function playAdhan() {
 // Play notification sound
 function playNotification() {
     const notificationSound = document.getElementById('notificationSound');
-    if (notificationSound) {
+    if (!notificationSound) {
+        return;
+    }
+    
+    try {
         notificationSound.currentTime = 0;
-        notificationSound.play().catch(error => {
-            console.error('Error playing notification sound:', error);
-        });
+        notificationSound.play().catch(() => {});
+    } catch (error) {
+        // Silent error handling
     }
 }
 
@@ -435,7 +468,10 @@ function checkPrayerTime(timings) {
                     new Notification(`اقترب موعد صلاة ${prayer.name}`, {
                         body: `سيحين وقت الصلاة الساعة ${prayer.time}`,
                         icon: 'https://i.imgur.com/4Qz4Q1u.png',
-                        requireInteraction: true
+                        dir: 'rtl',
+                        lang: 'ar',
+                        tag: 'salawat-reminder',
+                        requireInteraction: true // Keep notification visible until clicked
                     });
                 }
                 
@@ -455,7 +491,10 @@ function checkPrayerTime(timings) {
                     new Notification(`حان الآن وقت صلاة ${prayer.name}`, {
                         body: `وقت الصلاة: ${prayer.time}`,
                         icon: 'https://i.imgur.com/4Qz4Q1u.png',
-                        requireInteraction: true
+                        dir: 'rtl',
+                        lang: 'ar',
+                        tag: 'salawat-reminder',
+                        requireInteraction: true // Keep notification visible until clicked
                     });
                 }
                 
@@ -697,4 +736,44 @@ document.addEventListener('DOMContentLoaded', function() {
         // Initialize prayer times for main page
         init();
     }
+    
+    // Function to handle counter click
+    function handleCounterClick(e) {
+        e.stopPropagation(); // Prevent event bubbling
+        const counter = e.currentTarget;
+        const prayer = counter.getAttribute('data-prayer');
+        const countSpan = counter.querySelector('.counter');
+        let currentCount = parseInt(countSpan.textContent, 10) || 0;
+        
+        // Increment by 1
+        currentCount++;
+        
+        // Update display and storage
+        countSpan.textContent = currentCount;
+        localStorage.setItem(`counter-${prayer}`, currentCount.toString());
+    }
+
+    // Handle click counters for prayers with localStorage persistence
+    const counters = document.querySelectorAll('.pray-counter');
+
+    // Initialize counters with saved values or 0
+    counters.forEach(counter => {
+        // Remove any existing click event listeners
+        const newCounter = counter.cloneNode(true);
+        counter.parentNode.replaceChild(newCounter, counter);
+        
+        const prayer = newCounter.getAttribute('data-prayer');
+        const countSpan = newCounter.querySelector('.counter');
+        
+        // Load saved count from localStorage or initialize to 0
+        const savedCount = localStorage.getItem(`counter-${prayer}`);
+        countSpan.textContent = savedCount || '0';
+        
+        if (!savedCount) {
+            localStorage.setItem(`counter-${prayer}`, '0');
+        }
+        
+        // Add click event to the new counter
+        newCounter.addEventListener('click', handleCounterClick);
+    });
 });
