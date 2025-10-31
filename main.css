@@ -1,0 +1,1178 @@
+:root {
+  --fajr: #1a73e8;     /* Blue for Fajr */
+  --dhuhr: #0b8043;    /* Green for Dhuhr */
+  --asr: #f6bf26;      /* Gold for Asr */
+  --maghrib: #e67c73;  /* Coral for Maghrib */
+  --isha: #8e24aa;     /* Purple for Isha */
+  --text: #2c3e50;     /* Dark gray for text */
+  --bg: #f8f9fa;       /* Light gray for background */
+  --card-bg: #ffffff;  /* White for cards */
+  --shadow: rgba(0, 0, 0, 0.1);
+  --border: rgba(0, 0, 0, 0.1);
+}
+
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: var(--bg);
+  color: var(--text);
+  margin: 0;
+  padding: 0;
+  direction: rtl;
+  text-align: right;
+  line-height: 1.6;
+}
+
+.navbar .container {
+  max-width: 100%;
+  margin: 0 auto !important;
+  padding: 0 8px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+}
+
+/* Current Time Styles */
+.current-time {
+  text-align: center;
+  margin-bottom: 30px;
+  background: var(--card-bg);
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: 0 4px 6px var(--shadow);
+  margin-bottom: 25px;
+}
+
+#current-time {
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: var(--text);
+  margin: 10px 0;
+  font-family: 'Digital-7', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+#date {
+  color: #666;
+  font-size: 1.2rem;
+  margin: 0;
+}
+
+/* Sticky category links */
+.catogery {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    padding: 10px 0;
+    background-color: var(--card-bg);
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    margin: 0;
+    list-style: none;
+}
+
+.catogery .nav-link {
+    padding: 8px 15px;
+    border-radius: 20px;
+    background-color: #f0f0f0;
+    color: var(--text);
+    text-decoration: none;
+    transition: all 0.3s ease;
+}
+
+.catogery .nav-link:hover,
+.catogery .nav-link:focus {
+    background-color: var(--primary-color, #4a90e2);
+    color: white;
+}
+
+/* Adjust the spacing for the sections */
+#morning-section,
+#evening-section {
+    scroll-margin-top: 60px; /* Height of the sticky header */
+}
+
+#morning-section h2,
+#evening-section h2 {
+    margin-top: 20px;
+}
+
+/* Prayer Counters Styling */
+.prayers-row {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin: 25px 0;
+    flex-wrap: wrap;
+    padding: 0 15px;
+}
+
+.pray-counter {
+    background: linear-gradient(145deg, #4a6fa5, #166088);
+    color: white;
+    padding: 12px 20px;
+    border-radius: 10px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16);
+    text-align: center;
+    min-width: 100px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: none;
+}
+
+.pray-counter:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+}
+
+.pray-counter:active {
+    transform: translateY(1px);
+}
+
+.pray-counter .counter {
+    background: rgba(255, 255, 255, 0.2);
+    padding: 2px 10px;
+    border-radius: 15px;
+    margin-right: 8px;
+    font-weight: 700;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .prayers-row {
+        gap: 10px;
+    }
+    
+    .pray-counter {
+        padding: 10px 15px;
+        font-size: 1rem;
+        min-width: 85px;
+    }
+}
+
+/* Prayer Time Cards */
+.mainpray {
+  background: var(--card-bg);
+  border-radius: 12px;
+  box-shadow: 0 4px 6px var(--shadow);
+  margin-bottom: 15px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  border: none;
+}
+
+/* Sunrise Card Styling - More subtle appearance */
+.sunrise.mainpray {
+  --prayer-color: #e67e22; /* Orange color for sunrise */
+  background: transparent;
+  border-right: 4px solid transparent;
+  box-shadow: none;
+}
+
+.sunrise.mainpray .pray::before {
+  background: var(--prayer-color);
+  content: '';
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  margin-left: 8px;
+}
+
+.mainpray:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+}
+
+.mainpray.current-prayer {
+  border: none;
+  background: linear-gradient(to left, rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.7));
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 0 0 2px var(--current-color);
+}
+
+/* Next prayer highlight */
+.mainpray.next-prayer {
+  position: relative;
+  border-right: 4px solid #2dd4bf; /* Teal color for next prayer */
+  background: linear-gradient(135deg, rgba(236, 253, 245, 0.7), rgba(209, 250, 229, 0.7));
+  animation: pulse 2s infinite;
+  box-shadow: 0 2px 8px rgba(45, 212, 191, 0.2);
+}
+
+@keyframes pulse {
+  0% {
+    box-shadow: 0 0 0 0 rgba(45, 212, 191, 0.4);
+  }
+  70% {
+    box-shadow: 0 0 0 5px rgba(45, 212, 191, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(45, 212, 191, 0);
+  }
+}
+
+/* Next prayer indicator dot */
+.mainpray.next-prayer .pray::before {
+  content: '';
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  background-color: #2dd4bf;
+  border-radius: 50%;
+  margin-left: 8px;
+  animation: pulse 2s infinite;
+}
+
+.mainpray.current-prayer::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 5px;
+  height: 100%;
+  background: var(--current-color);
+}
+
+.mainpray .text {
+  padding: 20px 25px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: relative;
+}
+
+.mainpray .pray {
+  font-size: 1.4rem;
+  font-weight: 600;
+  margin: 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 0;
+  border-bottom: 1px solid var(--border);
+}
+
+/* Sunrise specific styling */
+.pray.sunrise {
+  font-size: 1.2rem;
+  color: #e67e22; /* Orange color for sunrise */
+  padding: 8px 0 12px 0;
+  border-bottom: none;
+}
+
+/* Fajr section - make consistent with other prayers */
+.first .text {
+  padding: 20px 25px;
+}
+
+.mainpray .pray::before {
+  content: '';
+  display: inline-block;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: var(--prayer-color);
+  margin-left: 8px;
+}
+
+/* Prayer-specific colors */
+.mainpray.first .pray { 
+  --current-color: var(--fajr); 
+  color: var(--fajr); 
+}
+
+.mainpray.second .pray { 
+  --current-color: var(--dhuhr); 
+  color: var(--dhuhr); 
+}
+
+.mainpray.third .pray { 
+  --current-color: var(--asr); 
+  color: var(--asr); 
+}
+
+.mainpray.fourth .pray { 
+  --current-color: var(--maghrib); 
+  color: var(--maghrib); 
+}
+
+.mainpray.fifth .pray { 
+  --current-color: var(--isha); 
+  color: var(--isha); 
+}
+
+/* Add colored circles to all prayer times */
+.mainpray .pray::before {
+  content: '';
+  display: inline-block;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  margin-left: 8px;
+  background: var(--current-color);
+}
+
+/* Specific colors for each prayer time */
+.mainpray.first .pray::before { background: var(--fajr); }
+.mainpray.second .pray::before { background: var(--dhuhr); }
+.mainpray.third .pray::before { background: var(--asr); }
+.mainpray.fourth .pray::before { background: var(--maghrib); }
+.mainpray.fifth .pray::before { background: var(--isha); }
+
+.mainpray .pray span {
+  font-family: 'Digital-7', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--text);
+  background: rgba(0, 0, 0, 0.03);
+  padding: 3px 12px;
+  border-radius: 20px;
+  min-width: 80px;
+  text-align: center;
+  direction: ltr;
+  display: inline-block;
+}
+
+/* Location text */
+.location {
+  text-align: center;
+  margin-top: 25px;
+  color: #666;
+  font-size: 0.95rem;
+}
+
+/* Navbar styles */
+.navbar {
+  background: linear-gradient(135deg, #00b4d8 0%, #0077b6 100%);
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  padding: 0.3rem 0.5rem;
+  margin-bottom: 10px;
+  position: relative;
+  z-index: 1000;
+}
+
+.navbar-brand, .nav-link {
+  color: white !important;
+  font-weight: 500;
+  font-size: 0.9rem;
+  padding: 0.3rem 0.6rem;
+}
+
+.nav-link.active {
+  font-weight: 600;
+  position: relative;
+}
+
+.nav-link.active::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  right: 0.5rem;
+  left: 0.5rem;
+  height: 3px;
+  background: white;
+  border-radius: 3px;
+}
+
+/* Tasbeeh Counter Styles */
+.main-circle {
+  background: white;
+  border-radius: 15px;
+  padding: 25px;
+  margin-bottom: 25px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+  transition: all 0.3s ease;
+}
+
+.main-circle:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+}
+
+.circle {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: #2c3e50;
+  margin-bottom: 15px;
+  padding: 15px;
+  border-radius: 10px;
+  background: #f8f9fa;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.circle:active {
+  transform: scale(0.98);
+}
+
+.info {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 15px;
+  margin-bottom: 15px;
+  transition: .3s;
+  border-radius: 6px;
+  padding: 10px;
+}
+
+.info:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+}
+
+/* Counter Button Styles */
+.counter-btn {
+  margin: auto;
+  margin-top: 5px;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background: linear-gradient(145deg, #4a90e2, #3a7bc8);
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.1rem;
+  font-weight: bold;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+  cursor: pointer;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+  padding: 10px;
+  line-height: 1.4;
+}
+
+.counter-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 12px rgba(0,0,0,0.15);
+  background: linear-gradient(145deg, #3a7bc8, #2a6bb8);
+}
+
+.counter-btn:active {
+  transform: scale(0.95);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Counter Number Display */
+.number {
+  font-size: 1.8rem;
+  font-weight: bold;
+  min-width: 50px;
+  text-align: center;
+  color: #2c3e50;
+  transition: all 0.3s ease;
+  position: relative;
+  font-family: 'Digital-7', monospace;
+  background: #f0f4f8;
+  padding: 5px 20px;
+  border-radius: 8px;
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.number.counter-update {
+  animation: pulse 0.5s ease;
+}
+
+@keyframes pulse {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.1); }
+  100% { transform: scale(1); }
+}
+
+.clear {
+  background: #e74c3c;
+  color: white;
+  padding: 8px 20px;
+  border-radius: 20px;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  border: none;
+  font-weight: 500;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.clear:hover {
+  background: #c0392b;
+  transform: translateY(-2px);
+}
+
+.clear:active {
+  transform: translateY(0);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  transform: translateY(0);
+}
+
+/* ====================
+   Responsive Styles
+   ==================== */
+
+/* Large devices (desktops, 992px and up) */
+@media (max-width: 1200px) {
+    .container {
+        padding: 0 15px;
+    }
+    
+    .main-circle {
+        margin: 20px 0;
+    }
+}
+
+/* Medium devices (tablets, 768px and up) */
+@media (max-width: 992px) {
+    .container {
+        max-width: 90%;
+    }
+    
+    .main-circle {
+        padding: 20px;
+    }
+    
+    .circle {
+        width: 130px;
+        height: 130px;
+        font-size: 1rem;
+    }
+    
+    .number {
+        font-size: 1.5rem;
+        padding: 3px 15px;
+    }
+    .circle{
+      width: 120px !important;
+      height: 120px !important;
+      font-size: 20px !important;
+    }
+    .info{
+      padding: 0 !important;
+    }
+}
+/* .navbar-toggler{
+  display: none !important;
+}
+.navbar-collapse{
+  display: flex !important;
+  padding: 0 !important;
+} */
+.container-fluid{
+  padding: 0 !important;
+}
+.navbar{
+  padding: 0 !important;
+  padding: 10px 0 !important;
+}
+/* .navbar-collapse ul{
+  flex-direction: row !important;
+  gap:0 !important;
+}
+.navbar-collapse ul li{
+  margin: 0 !important;
+  padding: 0 !important;
+  width: fit-content !important;
+} */
+.circle::selection{
+  background-color: transparent !important;
+}
+.nav-item{
+  width: fit-content;
+}
+.navbar-nav{
+  justify-content: start !important;
+}
+/* Navbar styles */
+.navbar {
+    padding: 0.5rem 1rem;
+}
+
+.navbar-toggler {
+    border: none;
+    padding: 0.5rem;
+}
+
+.navbar-toggler:focus {
+    box-shadow: none;
+}
+
+.navbar-toggler-icon {
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba%28255, 255, 255, 0.9%29' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e") !important;
+}
+
+.navbar-nav {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    width: 100%;
+    gap: 1rem;
+}
+
+.nav-item {
+    margin: 0 0.25rem;
+}
+
+.nav-link {
+    color: white !important;
+    font-size: 1rem;
+    font-weight: 500;
+    padding: 0.5rem 0.75rem !important;
+    transition: all 0.3s ease;
+    position: relative;
+}
+
+.nav-link:hover {
+    opacity: 0.9;
+}
+
+.nav-link.active {
+    font-weight: 600;
+    color: #ffd700 !important;
+}
+
+/* Responsive styles */
+@media (max-width: 991.98px) {
+    .navbar-nav {
+        flex-direction: column;
+        text-align: center;
+        gap: 0;
+        margin: 0 !important;
+        padding: 0 !important;
+    }
+    
+    .navbar-collapse {
+        padding: 1rem 0;
+    }
+    
+    .nav-item {
+        margin: 0 !important;
+    }
+}
+
+/* Small devices (landscape phones, 576px and up) */
+/* Navigation styles */
+.navbar {
+    background-color: var(--card-bg);
+    box-shadow: 0 2px 4px var(--shadow);
+    padding: 15px 0;
+    direction: rtl;
+}
+
+.navbar .container {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 0 15px;
+}
+
+.navbar-nav {
+    display: flex;
+    flex-direction: row !important;
+    justify-content: start;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    width: 100%;
+}
+
+.nav-item {
+    flex: 1;
+    text-align: center;
+}
+
+.nav-link {
+    color: var(--text);
+    font-weight: 600;
+    padding: 10px 5px;
+    border-radius: 6px;
+    transition: all 0.3s ease;
+    text-decoration: none;
+    display: block;
+    margin: 0 2px;
+    font-size: 1rem;
+    white-space: nowrap;
+}
+
+.nav-link:hover, 
+.nav-link.active {
+    background-color: #f0f0f0;
+    color: var(--text);
+    transform: translateY(-2px);
+}
+
+@media (max-width: 768px) {
+    .container {
+        padding: 0;
+    }
+    
+    .nav-item {
+        margin: 0;
+        padding: 0;
+        width: 100%;
+    }
+    
+    .nav-link {
+        padding: 0.5rem 1rem;
+        margin: 0;
+        display: block;
+        border-radius: 0;
+    }
+    
+    .navbar {
+        padding: 10px 0;
+    }
+    
+    .navbar-nav {
+        flex-direction: column;
+        gap: 5px;
+        padding: 0 10px;
+    }
+    
+    .nav-item {
+        width: 100%;
+        margin: 2px 0;
+    }
+    
+    .nav-link {
+        padding: 12px 5px;
+        font-size: 1rem;
+        white-space: normal;
+    }
+    
+    .main-circle {
+        margin: 15px auto;
+        padding: 20px 15px;
+        width: 100%;
+    }
+    
+    .circle {
+        width: 140px;
+        height: 140px;
+        font-size: 1rem;
+        margin-bottom: 20px;
+    }
+    
+    .info {
+        padding: 12px;
+        margin-top: 20px;
+    }
+    
+    .counter-btn {
+        width: 42px;
+        height: 42px;
+        font-size: 1.4rem;
+    }
+    
+    .clear {
+        padding: 8px 16px;
+        font-size: 0.9rem;
+    }
+    
+    .number {
+        font-size: 1.5rem;
+        padding: 5px 15px;
+        min-width: 50px;
+    }
+    
+  .mainpray .text {
+    padding: 18px 20px;
+  }
+  }
+/* Animation for current prayer */
+@keyframes pulse {
+  0% { box-shadow: 0 0 0 0 rgba(0, 0, 0, 0.1); }
+  70% { box-shadow: 0 0 0 10px rgba(0, 0, 0, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(0, 0, 0, 0); }
+}
+
+.mainpray.current-prayer {
+  animation: pulse 2s infinite;
+  border-end-start-radius: 6px;
+  border-end-end-radius: 6px;
+}
+
+.nav-item {
+  transition: all 0.3s ease;
+  margin: 0 5px;
+}
+
+.nav-link {
+  color: white !important;
+  padding: 0.5rem 1.2rem !important;
+  position: relative;
+  font-weight: 500;
+  margin: 0 0.2rem;
+  border-radius: 8px;
+  transition: all 0.3s ease !important;
+  overflow: hidden;
+}
+
+.nav-link:hover {
+  color: white !important;
+  background: rgba(255, 255, 255, 0.15);
+  transform: translateY(-2px);
+}
+
+.catogery {
+  display: flex;
+  list-style: none;
+}
+
+.catogery li a {
+  color: #0d47a1 !important; /* Darker blue for better visibility */
+  transition: all 0.3s ease;
+  font-weight: 500;
+  text-decoration: none;
+  position: relative;
+  padding: 0.5rem 1rem;
+  display: block;
+  border-radius: 6px;
+}
+.catogery li a:hover {
+  color: #002b7f !important; /* Even darker blue on hover */
+  background: rgba(13, 71, 161, 0.15);
+  transform: translateY(-1px);
+  text-shadow: 0 0 8px rgba(13, 71, 161, 0.25);
+}
+.catogery li a.active {
+  color: #002b7f !important;
+  font-weight: 600;
+  background: rgba(13, 71, 161, 0.15);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Add a subtle scale effect on click */
+.catogery li a:active {
+  transform: scale(0.95);
+}
+
+ul li {
+  position: relative;
+  cursor: pointer;
+}
+
+.navbar ul li::before {
+  content: "";
+  position: absolute;
+  bottom: -5px;
+  left: 50%;
+  transform: translateX(-50%);
+  height: 3px;
+  width: 0;
+  background: #ff9e00;
+  border-radius: 3px;
+  transition: all 0.3s ease;
+}
+
+.navbar ul li:hover::before {
+  width: 70%;
+}
+
+.navbar-brand {
+  color: white !important;
+  font-weight: 600;
+  font-size: 1.5rem;
+  letter-spacing: 0.5px;
+}
+
+.navbar-toggler {
+  border: none;
+  padding: 0.5rem;
+}
+
+.navbar-toggler:focus {
+  box-shadow: none;
+}
+
+.navbar-toggler-icon {
+  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba%28255, 255, 255, 0.9%29' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e") !important;
+}
+
+.active {
+  color: #01497c !important;
+}
+
+.navbar {
+  flex-wrap: nowrap !important;
+}
+
+.circle {
+  border-radius: 50%;
+  color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 150px;
+  height: 150px;
+  background: linear-gradient(135deg, #90e0ef, #0077b6);
+  margin: 0 auto 15px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+  font-size: 1.4rem; /* Increased font size */
+  text-align: center;
+  padding: 15px;
+}
+.circle::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 100%;
+  height: 100%;
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 10px;
+  transform: translate(-50%, -50%) scale(0);
+  transition: transform 0.3s ease, background 0.3s ease;
+}
+.circle:hover {
+  transform: translateY(-5px) scale(1.05);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.25);
+}
+.circle:hover::before {
+  transform: translate(-50%, -50%) scale(1);
+}
+.circle:hover .num {
+  font-size: 4rem !important; /* Larger on hover with important */
+  font-weight: 800 !important;
+  color: #ffffff !important;
+  text-shadow: 0 4px 10px rgba(0, 0, 0, 0.4) !important;
+  position: relative !important;
+  text-align: center !important;
+  min-width: 70px !important; /* Slightly wider for larger numbers */
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif !important;
+  z-index: 1 !important;
+  line-height: 1.2 !important;
+}
+.circle .plus, .circle .minus {
+  width: 10px;
+  height: 10px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.2rem;
+  color: white;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  background: transparent;
+  border: none;
+  box-shadow: none;
+}
+.circle .plus:hover, .circle .minus:hover {
+  transform: translateY(-2px);
+  opacity: 0.8;
+}
+.circle .plus:active, .circle .minus:active {
+  transform: translateY(0);
+  box-shadow: 0 2px 3px rgba(0, 0, 0, 0.1);
+}
+.circle .plus {
+  top: 10px;
+  right: 10px;
+}
+.circle .minus {
+  bottom: 10px;
+  right: 10px;
+}
+.circle .clear {
+  position: absolute;
+  bottom: 5px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(255, 255, 255, 0.2);
+  border: none;
+  color: white;
+  padding: 2px 8px;
+  border-radius: 10px;
+  font-size: 0.7rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.circle:active {
+  transform: scale(0.95);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+}
+
+.circle::after {
+  content: '';
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  background: rgba(255, 255, 255, 0.3);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.1), transparent);
+  transform: translateX(-100%);
+  transition: transform 0.4s ease;
+}
+.info:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
+}
+.info:hover::before {
+  transform: translateX(0);
+}
+.info:hover .info-icon {
+  transform: rotate(10deg) scale(1.1);
+}
+.info .info-text {
+  font-weight: 500;
+  font-size: 0.95rem;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+}
+.info .info-icon {
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-size: 1.2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.15);
+}
+.info .info-icon:hover {
+  background: rgba(255, 255, 255, 0.25);
+  transform: rotate(15deg) scale(1.15);
+}
+.info .info-icon:active {
+  transform: scale(0.95);
+}
+
+.the {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+  margin-top: 20px;
+  margin: auto !important;
+}
+
+@media (max-width: 767px) {
+  .the {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+@media (max-width: 340px) {
+  .the {
+    grid-template-columns: 1fr;
+  }
+}
+.bar {
+  color: white;
+}
+
+/* Remembrances Section Styling */
+.remembrance-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.remembrance-item {
+  background: rgba(255, 255, 255, 0.9);
+  border-radius: 12px;
+  padding: 20px;
+  margin-bottom: 20px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  border-right: 4px solid var(--fifth);
+}
+
+.remembrance-item:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+}
+
+.remembrance-item p {
+  font-size: 1.2rem;
+  color: #333;
+  line-height: 1.8;
+  margin-bottom: 15px;
+  text-align: right;
+  font-weight: 500;
+}
+
+.remembrance-item .repeat {
+  display: inline-block;
+  background: var(--fifth);
+  color: white;
+  padding: 5px 15px;
+  border-radius: 20px;
+  font-size: 0.9rem;
+  margin-top: 10px;
+}
+.pray-counter::selection{
+  background-color: transparent;
+}
+h2 {
+  color: var(--fifth);
+  font-weight: 700;
+  position: relative;
+  padding-bottom: 10px;
+  margin-bottom: 30px;
+}
+
+h2::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  width: 100px;
+  height: 4px;
+  background: var(--fifth);
+  border-radius: 2px;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .remembrance-item {
+    padding: 15px;
+  }
+  .remembrance-item p {
+    font-size: 1.1rem;
+  }
+  h2 {
+    font-size: 1.8rem;
+  }
+}
+.num {
+  font-size: 2rem !important; /* Increased size with important */
+  font-weight: 800 !important;
+  color: #2c3e50 !important;
+  margin: 0 15px !important;
+  min-width: 70px !important;
+  text-align: center !important;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif !important;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.15) !important;
+  transition: all 0.2s ease !important;
+  line-height: 1.2 !important;
+}
+
+.container {
+  padding: 0 !important;
+  margin-top: 10px !important;
+  margin: auto;
+}/*# sourceMappingURL=main.css.map */
