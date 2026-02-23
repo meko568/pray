@@ -647,7 +647,7 @@ function resetCounter(id) {
 
 // Load saved counters when the page loads
 function loadCounters() {
-    ['one', 'two', 'three'].forEach(id => {
+    ['one', 'two', 'three','four','five'].forEach(id => {
         const savedValue = localStorage.getItem(`counter_${id}`);
         if (savedValue !== null) {
             const element = document.querySelector(`.number.${id}`);
