@@ -709,9 +709,139 @@ function stopSalawatReminder() {
     }
 }
 
+// Function to handle remembrance repeat counter
+function handleRemembranceRepeat(e) {
+    e.stopPropagation();
+    const repeatElement = e.currentTarget;
+    const remembranceItem = repeatElement.closest('.remembrance-item');
+    
+    // Get current count from element text
+    let currentCount = repeatElement.textContent;
+    
+    // Parse the count from Arabic text - handle any number
+    let count = 0;
+    if (currentCount.includes('تم بحمد الله')) {
+        // Already completed, do nothing
+        return;
+    } else if (currentCount.includes('مرة واحدة')) {
+        count = 1;
+    } else if (currentCount.includes('مرتين')) {
+        count = 2;
+    } else if (currentCount.includes('مائة مرة')) {
+        count = 100;
+    } else {
+        // Extract number from text like "99 مرة" or "ثلاث مرات"
+        const numberMatch = currentCount.match(/\d+/);
+        if (numberMatch) {
+            count = parseInt(numberMatch[0]);
+        } else {
+            // Handle Arabic number words
+            const arabicNumbers = {
+                'ثلاث': 3, 'أربع': 4, 'خمس': 5, 'ست': 6,
+                'سبع': 7, 'ثماني': 8, 'تسع': 9, 'عشر': 10
+            };
+            for (const [word, num] of Object.entries(arabicNumbers)) {
+                if (currentCount.includes(word)) {
+                    count = num;
+                    break;
+                }
+            }
+        }
+    }
+    
+    // Decrease count by 1
+    if (count > 0) {
+        count--;
+        
+        // Update display
+        if (count === 0) {
+            repeatElement.textContent = 'تم بحمد الله';
+            repeatElement.style.background = 'linear-gradient(135deg, #27ae60, #229954)';
+            repeatElement.style.color = 'white';
+            repeatElement.classList.add('completed');
+        } else {
+            // Convert back to Arabic text
+            repeatElement.textContent = convertCountToArabic(count);
+        }
+        
+        // Add visual feedback
+        repeatElement.classList.add('counter-update');
+        setTimeout(() => repeatElement.classList.remove('counter-update'), 200);
+        
+        // Haptic feedback for mobile
+        if (navigator.vibrate) {
+            navigator.vibrate(10);
+        }
+    }
+}
+
+// Convert number to Arabic text
+function convertCountToArabic(count) {
+    switch(count) {
+        case 1: return 'مرة واحدة';
+        case 2: return 'مرتين';
+        case 3: return 'ثلاث مرات';
+        case 4: return 'أربع مرات';
+        case 5: return 'خمس مرات';
+        case 6: return 'ست مرات';
+        case 7: return 'سبع مرات';
+        case 8: return 'ثماني مرات';
+        case 9: return 'تسع مرات';
+        case 10: return 'عشر مرات';
+        case 100: return 'مائة مرة';
+        default: return `${count} مرة`;
+    }
+}
+
+// Initialize remembrance repeat buttons
+function initializeRemembranceButtons() {
+    const remembranceItems = document.querySelectorAll('.remembrance-item');
+    
+    remembranceItems.forEach(item => {
+        // Make entire item clickable
+        item.style.cursor = 'pointer';
+        item.style.transition = 'all 0.3s ease';
+        
+        // Add click event to the entire item
+        item.addEventListener('click', function(e) {
+            // Find the repeat button within this item
+            const repeatButton = this.querySelector('.repeat');
+            if (repeatButton && !repeatButton.textContent.includes('تم بحمد الله')) {
+                // Create a synthetic event for the repeat button
+                const syntheticEvent = new MouseEvent('click', {
+                    bubbles: true,
+                    cancelable: true,
+                    view: window
+                });
+                repeatButton.dispatchEvent(syntheticEvent);
+            }
+        });
+        
+        // Add hover effect to the entire item
+        item.addEventListener('mouseenter', function() {
+            const repeatButton = this.querySelector('.repeat');
+            if (repeatButton && !repeatButton.textContent.includes('تم بحمد الله')) {
+                this.style.transform = 'translateY(-3px)';
+                this.style.boxShadow = '0 8px 25px rgba(0, 0, 0, 0.15)';
+            }
+        });
+        
+        item.addEventListener('mouseleave', function() {
+            this.style.transform = 'translateY(0)';
+            this.style.boxShadow = '0 4px 15px rgba(0, 0, 0, 0.1)';
+        });
+        
+        // Add click event directly to repeat button
+        const repeatButton = item.querySelector('.repeat');
+        if (repeatButton) {
+            repeatButton.addEventListener('click', handleRemembranceRepeat);
+        }
+    });
+}
+
 // Add touch event support for mobile
 document.addEventListener('DOMContentLoaded', function() {
-    // Request notification permission when the app loads
+    // Request notification permission when app loads
     if ('Notification' in window) {
         Notification.requestPermission().then(permission => {
             if (permission === 'granted') {
@@ -732,6 +862,8 @@ document.addEventListener('DOMContentLoaded', function() {
                 element.textContent = '0';
             }
         });
+    } else if (window.location.pathname.endsWith('main3.html')) {
+        initializeRemembranceButtons();
     } else {
         // Initialize prayer times for main page
         init();

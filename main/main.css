@@ -4,6 +4,7 @@
   --asr: #f6bf26;      /* Gold for Asr */
   --maghrib: #e67c73;  /* Coral for Maghrib */
   --isha: #8e24aa;     /* Purple for Isha */
+  --fifth: #4a90e2;    /* Blue for remembrances */
   --text: #2c3e50;     /* Dark gray for text */
   --bg: #f8f9fa;       /* Light gray for background */
   --card-bg: #ffffff;  /* White for cards */
@@ -1123,6 +1124,41 @@ ul li {
   border-radius: 20px;
   font-size: 0.9rem;
   margin-top: 10px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  user-select: none;
+}
+
+.remembrance-item .repeat:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(74, 144, 226, 0.3);
+}
+
+.remembrance-item .repeat.completed {
+  background: linear-gradient(135deg, #27ae60, #229954);
+  font-weight: 700;
+  animation: completed-pulse 0.5s ease;
+}
+
+/* Transparent selection for interactive elements */
+.remembrance-item .repeat::selection {
+  background-color: transparent;
+  color: inherit;
+}
+
+.remembrance-item .repeat::-moz-selection {
+  background-color: transparent;
+  color: inherit;
+}
+
+.remembrance-item::selection {
+  background-color: transparent;
+  color: inherit;
+}
+
+.remembrance-item::-moz-selection {
+  background-color: transparent;
+  color: inherit;
 }
 .pray-counter::selection{
   background-color: transparent;
@@ -1146,6 +1182,22 @@ h2::after {
   border-radius: 2px;
 }
 
+/* Zekr Number Styling */
+.zekr-number {
+  display: inline-block;
+  background: linear-gradient(135deg, #4a90e2, #3a7bc8);
+  color: white;
+  font-weight: 700;
+  font-size: 1.1rem;
+  padding: 8px 12px;
+  border-radius: 50%;
+  min-width: 35px;
+  text-align: center;
+  margin-left: 10px;
+  box-shadow: 0 2px 8px rgba(74, 144, 226, 0.3);
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
 /* Responsive adjustments */
 @media (max-width: 768px) {
   .remembrance-item {
@@ -1156,6 +1208,11 @@ h2::after {
   }
   h2 {
     font-size: 1.8rem;
+  }
+  .zekr-number {
+    font-size: 0.9rem;
+    min-width: 30px;
+    padding: 6px 10px;
   }
 }
 .num {
