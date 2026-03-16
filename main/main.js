@@ -558,10 +558,21 @@ function testAudio() {
     }
 }
 
-// Counter functionality for tasbeeh with local storage
+// Counter functionality for tasbeeh with cycle counting
 function increment(id) {
+    // Get current count from DOM or localStorage
     const current = getCounter(id);
-    setCounter(id, current + 1);
+    
+    // Decrease by 1 (like azkar system)
+    const newCount = current - 1;
+    
+    if (newCount > 0) {
+        setCounter(id, newCount);
+    } else if (newCount === 0) {
+        // Reset to 100 and increment cycle counter
+        setCounter(id, 100);
+        incrementCycleCounter(id);
+    }
     
     // Add visual feedback
     const element = document.querySelector(`.number.${id}`);
@@ -576,15 +587,37 @@ function increment(id) {
     }
 }
 
+function incrementCycleCounter(id) {
+    // Get current cycle count
+    const cycleElement = document.querySelector(`.cycle-counter.${id}`);
+    if (cycleElement) {
+        const currentCycle = parseInt(cycleElement.textContent) || 0;
+        const newCycle = currentCycle + 1;
+        cycleElement.textContent = newCycle;
+        
+        // Save to localStorage
+        localStorage.setItem(`cycle_counter_${id}`, newCycle.toString());
+        
+        // Add animation for cycle completion
+        cycleElement.classList.add('counter-update');
+        setTimeout(() => cycleElement.classList.remove('counter-update'), 200);
+        
+        // Haptic feedback for cycle completion
+        if (navigator.vibrate) {
+            navigator.vibrate([50, 50, 50]);
+        }
+    }
+}
+
 function getCounter(id) {
     // Try to get from localStorage first
     const savedValue = localStorage.getItem(`counter_${id}`);
     if (savedValue !== null) {
         return parseInt(savedValue);
     }
-    // If not in localStorage, get from DOM or default to 0
+    // If not in localStorage, get from DOM or default to 100
     const element = document.querySelector(`.number.${id}`);
-    return element ? parseInt(element.textContent) || 0 : 0;
+    return element ? parseInt(element.textContent) || 100 : 100;
 }
 
 function setCounter(id, value) {
@@ -621,9 +654,19 @@ function setCounter(id, value) {
 
 function resetCounter(id) {
     // Show confirmation for reset
-    if (getCounter(id) > 0) {
-        if (confirm('هل أنت متأكد من إعادة العداد إلى الصفر؟')) {
-            setCounter(id, 0);
+    const currentCount = getCounter(id);
+    const currentCycle = parseInt(localStorage.getItem(`cycle_counter_${id}`) || '0');
+    
+    if (currentCount < 100 || currentCycle > 0) {
+        if (confirm('هل أنت متأكد من إعادة العداد إلى 100 ومسح الدورات؟')) {
+            setCounter(id, 100);
+            localStorage.setItem(`cycle_counter_${id}`, '0');
+            
+            const cycleElement = document.querySelector(`.cycle-counter.${id}`);
+            if (cycleElement) {
+                cycleElement.textContent = '0';
+            }
+            
             // Add reset effect
             const elements = [
                 document.querySelector(`.clear.${id}`),
@@ -647,12 +690,22 @@ function resetCounter(id) {
 
 // Load saved counters when the page loads
 function loadCounters() {
-    ['one', 'two', 'three','four','five'].forEach(id => {
+    ['one', 'two', 'three', 'four', 'five'].forEach(id => {
+        // Load main counter
         const savedValue = localStorage.getItem(`counter_${id}`);
         if (savedValue !== null) {
             const element = document.querySelector(`.number.${id}`);
             if (element) {
                 element.textContent = savedValue;
+            }
+        }
+        
+        // Load cycle counter
+        const savedCycle = localStorage.getItem(`cycle_counter_${id}`);
+        if (savedCycle !== null) {
+            const cycleElement = document.querySelector(`.cycle-counter.${id}`);
+            if (cycleElement) {
+                cycleElement.textContent = savedCycle;
             }
         }
     });
@@ -793,11 +846,13 @@ function convertCountToArabic(count) {
     }
 }
 
-// Initialize remembrance repeat buttons
-function initializeRemembranceButtons() {
-    const remembranceItems = document.querySelectorAll('.remembrance-item');
+// Initialize tasbeeh items
+function initializeTasbeehItems() {
+    const tasbeehItems = document.querySelectorAll('.tasbeeh-item');
     
-    remembranceItems.forEach(item => {
+    tasbeehItems.forEach((item, index) => {
+        const id = ['tasbeeh1', 'tasbeeh2', 'tasbeeh3', 'tasbeeh4', 'tasbeeh5'][index];
+        
         // Make entire item clickable
         item.style.cursor = 'pointer';
         item.style.transition = 'all 0.3s ease';
@@ -807,13 +862,7 @@ function initializeRemembranceButtons() {
             // Find the repeat button within this item
             const repeatButton = this.querySelector('.repeat');
             if (repeatButton && !repeatButton.textContent.includes('تم بحمد الله')) {
-                // Create a synthetic event for the repeat button
-                const syntheticEvent = new MouseEvent('click', {
-                    bubbles: true,
-                    cancelable: true,
-                    view: window
-                });
-                repeatButton.dispatchEvent(syntheticEvent);
+                handleTasbeehRepeat(e, id);
             }
         });
         
@@ -834,9 +883,101 @@ function initializeRemembranceButtons() {
         // Add click event directly to repeat button
         const repeatButton = item.querySelector('.repeat');
         if (repeatButton) {
-            repeatButton.addEventListener('click', handleRemembranceRepeat);
+            repeatButton.addEventListener('click', function(e) {
+                e.stopPropagation();
+                handleTasbeehRepeat(e, id);
+            });
         }
+        
+        // Load saved values
+        loadTasbeehCounter(id);
     });
+}
+
+// Handle tasbeeh repeat counter
+function handleTasbeehRepeat(e, id) {
+    e.stopPropagation();
+    const item = e.currentTarget.closest('.tasbeeh-item');
+    const repeatElement = item.querySelector('.repeat');
+    const cycleElement = item.querySelector('.cycle-counter');
+    
+    // Get current count from element text
+    let currentCount = repeatElement.textContent;
+    
+    // Parse the count from Arabic text
+    let count = 0;
+    if (currentCount.includes('تم بحمد الله')) {
+        // Already completed, do nothing
+        return;
+    } else {
+        // Extract number from text like "99 مرة" or "100 مرة"
+        const numberMatch = currentCount.match(/\d+/);
+        if (numberMatch) {
+            count = parseInt(numberMatch[0]);
+        }
+    }
+    
+    // Decrease count by 1
+    if (count > 0) {
+        count--;
+        
+        // Update display
+        if (count === 0) {
+            repeatElement.textContent = 'تم بحمد الله';
+            repeatElement.style.background = 'linear-gradient(135deg, #27ae60, #229954)';
+            repeatElement.style.color = 'white';
+            repeatElement.classList.add('completed');
+            
+            // Increment cycle counter
+            const currentCycle = parseInt(cycleElement.textContent) || 0;
+            const newCycle = currentCycle + 1;
+            cycleElement.textContent = newCycle;
+            localStorage.setItem(`tasbeeh_cycle_${id}`, newCycle.toString());
+            
+            // Reset to 100 after a short delay
+            setTimeout(() => {
+                repeatElement.textContent = '100 مرة';
+                repeatElement.style.background = '';
+                repeatElement.style.color = '';
+                repeatElement.classList.remove('completed');
+                localStorage.setItem(`tasbeeh_${id}`, '100');
+            }, 1000);
+        } else {
+            // Convert back to Arabic text
+            repeatElement.textContent = `${count} مرة`;
+            localStorage.setItem(`tasbeeh_${id}`, count.toString());
+        }
+        
+        // Add visual feedback
+        repeatElement.classList.add('counter-update');
+        setTimeout(() => repeatElement.classList.remove('counter-update'), 200);
+        
+        // Haptic feedback for mobile
+        if (navigator.vibrate) {
+            navigator.vibrate(10);
+        }
+    }
+}
+
+// Load tasbeeh counter values
+function loadTasbeehCounter(id) {
+    const item = document.querySelector(`.tasbeeh-item:nth-child(${id.replace('tasbeeh', '')})`);
+    if (!item) return;
+    
+    const repeatElement = item.querySelector('.repeat');
+    const cycleElement = item.querySelector('.cycle-counter');
+    
+    // Load main counter
+    const savedValue = localStorage.getItem(`tasbeeh_${id}`);
+    if (savedValue !== null && repeatElement) {
+        repeatElement.textContent = `${savedValue} مرة`;
+    }
+    
+    // Load cycle counter
+    const savedCycle = localStorage.getItem(`tasbeeh_cycle_${id}`);
+    if (savedCycle !== null && cycleElement) {
+        cycleElement.textContent = savedCycle;
+    }
 }
 
 // Add touch event support for mobile
@@ -850,22 +991,34 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
     
-    // Initialize counters for tasbeeh page if we're on main2.html
+    // Update current time every second
+    updateCurrentTime();
+    setInterval(updateCurrentTime, 1000);
+    
+    // Get prayer times
+    getPrayerTimes().then(data => {
+        if (data && data.data && data.data.timings) {
+            const timings = data.data.timings;
+            showWelcomeNotification(timings);
+            
+            // Check prayer times every minute
+            setInterval(() => checkPrayerTime(timings), 60 * 1000);
+        }
+    });
+    
+    // Refresh prayer times every hour
+    setInterval(getPrayerTimes, 60 * 60 * 1000);
+    
+    // Initialize tasbeeh items if we're on main2.html
     if (window.location.pathname.endsWith('main2.html')) {
-        // Load saved counters
-        loadCounters();
-        
-        // Initialize any empty counters to 0
-        ['one', 'two', 'three'].forEach(id => {
-            const element = document.querySelector(`.number.${id}`);
-            if (element && !element.textContent.trim()) {
-                element.textContent = '0';
-            }
-        });
-    } else if (window.location.pathname.endsWith('main3.html')) {
+        initializeTasbeehItems();
+    }
+    // Initialize remembrance buttons if we're on main3.html
+    else if (window.location.pathname.endsWith('main3.html')) {
         initializeRemembranceButtons();
-    } else {
-        // Initialize prayer times for main page
+    }
+    // Initialize prayer times for main page
+    else {
         init();
     }
     

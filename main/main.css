@@ -1073,7 +1073,7 @@ ul li {
 
 @media (max-width: 767px) {
   .the {
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: 1fr;
   }
 }
 @media (max-width: 340px) {
@@ -1132,6 +1132,49 @@ ul li {
 .remembrance-item .repeat:hover {
   transform: translateY(-2px);
   box-shadow: 0 4px 12px rgba(74, 144, 226, 0.3);
+}
+
+.cycle-counter {
+  display: inline-block;
+  background: linear-gradient(135deg, #4a90e2, #3a7bc8);
+  color: white;
+  font-weight: 700;
+  font-size: 1rem;
+  padding: 6px 10px;
+  border-radius: 50%;
+  min-width: 35px;
+  text-align: center;
+  margin-left: 10px;
+  box-shadow: 0 2px 8px rgba(74, 144, 226, 0.3);
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  vertical-align: middle;
+}
+
+.tasbeeh-item .cycle-counter {
+  position: absolute;
+  top: 10px;
+  left: -5px;
+  font-size: 0.9rem;
+  padding: 4px 8px;
+  min-width: 30px;
+}
+
+.tasbeeh-item {
+  position: relative;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.tasbeeh-item:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+}
+
+.counter-buttons {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
 }
 
 .remembrance-item .repeat.completed {

@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>التسبيح</title>
-    <link rel="stylesheet" href="main.css">
+    <link rel="stylesheet" href="main/main.css">
     <link rel="stylesheet" href="bootstrap.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     <link rel="icon" type="image/svg+xml" href="data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop offset='0%25' stop-color='%2390e0ef'/%3E%3Cstop offset='100%25' stop-color='%230077b6'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='64' height='64' rx='12' fill='url(%23g)'/%3E%3Ctext x='50%25' y='58%25' font-family='Segoe UI, Arial, sans-serif' font-size='36' text-anchor='middle' fill='white'%3E%D8%AA%3C/text%3E%3C/svg%3E" />
@@ -30,63 +30,53 @@
             </ul>
         </div>
     </nav>
-    <div class="container the">
-        <div class="main-circle">
-            <div class="circle one" onclick="increment('one')">
-                <span class="circle-text">اللهم صل علي محمد</span>
-            </div>
-            <div class="info">
-                <div class="counter-buttons">
-                    <div class="number one">0</div>
-                </div>
-                <button class="clear one" onclick="resetCounter('one')">اعاده</button>
+    
+    <div class="container mt-4">
+        <div class="row">
+            <div class="col-12">
+                <h2 class="text-center mb-4">التسبيح</h2>
             </div>
         </div>
-        <div class="main-circle">
-            <div class="circle two" onclick="increment('two')">
-                <span class="circle-text">تسبيح</span>
-            </div>
-            <div class="info">
-                <div class="counter-buttons">
-                    <div class="number two">0</div>
+        
+        <div class="row">
+            <div class="col-md-6 col-lg-4 mb-3">
+                <div class="remembrance-item tasbeeh-item">
+                    <p>اللهم صل على محمد</p>
+                    <span class="repeat">100 مرة</span>
+                    <span class="cycle-counter">0</span>
                 </div>
-                <button class="clear two" onclick="resetCounter('two')">اعاده</button>
             </div>
-        </div>
-        <div class="main-circle">
-            <div class="circle three" onclick="increment('three')">
-                <span class="circle-text">أسماء الله الحسني</span>
-            </div>
-            <div class="info">
-                <div class="counter-buttons">
-                    <div class="number three">0</div>
+            <div class="col-md-6 col-lg-4 mb-3">
+                <div class="remembrance-item tasbeeh-item">
+                    <p>سبحان الله</p>
+                    <span class="repeat">100 مرة</span>
+                    <span class="cycle-counter">0</span>
                 </div>
-                <button class="clear three" onclick="resetCounter('three')">اعاده</button>
             </div>
-        </div>
-        <div class="main-circle">
-            <div class="circle four" onclick="increment('four')">
-                <span class="circle-text">سبحان الله و بحمده سبحان الله العظيم</span>
-            </div>
-            <div class="info">
-                <div class="counter-buttons">
-                    <div class="number four">0</div>
+            <div class="col-md-6 col-lg-4 mb-3">
+                <div class="remembrance-item tasbeeh-item">
+                    <p>أسماء الله الحسنى</p>
+                    <span class="repeat">100 مرة</span>
+                    <span class="cycle-counter">0</span>
                 </div>
-                <button class="clear four" onclick="resetCounter('four')">اعاده</button>
             </div>
-        </div>
-        <div class="main-circle">
-            <div class="circle five" onclick="increment('five')">
-                <span class="circle-text">استغفر الله العظيم</span>
-            </div>
-            <div class="info">
-                <div class="counter-buttons">
-                    <div class="number five">0</div>
+            <div class="col-md-6 col-lg-4 mb-3">
+                <div class="remembrance-item tasbeeh-item">
+                    <p>سبحان الله و بحمده سبحان الله العظيم</p>
+                    <span class="repeat">100 مرة</span>
+                    <span class="cycle-counter">0</span>
                 </div>
-                <button class="clear five" onclick="resetCounter('five')">اعاده</button>
+            </div>
+            <div class="col-md-6 col-lg-4 mb-3">
+                <div class="remembrance-item tasbeeh-item">
+                    <p>استغفر الله العظيم</p>
+                    <span class="repeat">100 مرة</span>
+                    <span class="cycle-counter">0</span>
+                </div>
             </div>
         </div>
     </div>
+    
     <script src="main/main.js"></script>
     <script src="bootstrap.bundle.min.js"></script>
 </body>

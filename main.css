@@ -1070,7 +1070,7 @@ ul li {
 
 @media (max-width: 767px) {
   .the {
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: 1fr;
   }
 }
 @media (max-width: 340px) {
