@@ -961,7 +961,9 @@ function handleTasbeehRepeat(e, id) {
 
 // Load tasbeeh counter values
 function loadTasbeehCounter(id) {
-    const item = document.querySelector(`.tasbeeh-item:nth-child(${id.replace('tasbeeh', '')})`);
+    // Get the index from the id (tasbeeh1 -> 1, tasbeeh2 -> 2, etc.)
+    const index = parseInt(id.replace('tasbeeh', '')) - 1;
+    const item = document.querySelectorAll('.tasbeeh-item')[index];
     if (!item) return;
     
     const repeatElement = item.querySelector('.repeat');
@@ -978,6 +980,19 @@ function loadTasbeehCounter(id) {
     if (savedCycle !== null && cycleElement) {
         cycleElement.textContent = savedCycle;
     }
+}
+
+// Initialize remembrance buttons for azkar
+function initializeRemembranceButtons() {
+    const remembranceItems = document.querySelectorAll('.remembrance-item');
+    
+    remembranceItems.forEach(item => {
+        const repeatButton = item.querySelector('.repeat');
+        if (repeatButton) {
+            // Add click event listener
+            repeatButton.addEventListener('click', handleRemembranceRepeat);
+        }
+    });
 }
 
 // Add touch event support for mobile
