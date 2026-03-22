@@ -889,6 +889,15 @@ function initializeTasbeehItems() {
             });
         }
         
+        // Add click event to individual reset button
+        const resetButton = item.querySelector('.reset-individual');
+        if (resetButton) {
+            resetButton.addEventListener('click', function(e) {
+                e.stopPropagation();
+                resetIndividualTasbeeh(item, id);
+            });
+        }
+        
         // Load saved values
         loadTasbeehCounter(id);
     });
@@ -979,6 +988,81 @@ function loadTasbeehCounter(id) {
     const savedCycle = localStorage.getItem(`tasbeeh_cycle_${id}`);
     if (savedCycle !== null && cycleElement) {
         cycleElement.textContent = savedCycle;
+    }
+}
+
+// Reset individual tasbeeh counter
+function resetIndividualTasbeeh(item, id) {
+    const repeatElement = item.querySelector('.repeat');
+    const cycleElement = item.querySelector('.cycle-counter');
+    const resetButton = item.querySelector('.reset-individual');
+    
+    // Reset main counter to 100
+    if (repeatElement) {
+        repeatElement.textContent = '100 مرة';
+        repeatElement.style.background = '';
+        repeatElement.style.color = '';
+        repeatElement.classList.remove('completed');
+        localStorage.setItem(`tasbeeh_${id}`, '100');
+    }
+    
+    // Reset cycle counter to 0
+    if (cycleElement) {
+        cycleElement.textContent = '0';
+        localStorage.setItem(`tasbeeh_cycle_${id}`, '0');
+    }
+    
+    // Visual feedback for reset button
+    if (resetButton) {
+        resetButton.classList.remove('btn-outline-secondary');
+        resetButton.classList.add('btn-success');
+        resetButton.innerHTML = '<i class="fas fa-check"></i>';
+        
+        setTimeout(() => {
+            resetButton.classList.remove('btn-success');
+            resetButton.classList.add('btn-outline-secondary');
+            resetButton.innerHTML = '<i class="fas fa-redo"></i>';
+        }, 1000);
+    }
+}
+
+// Reset all tasbeeh counters
+function resetAllTasbeehCounters() {
+    const tasbeehItems = document.querySelectorAll('.tasbeeh-item');
+    
+    tasbeehItems.forEach((item, index) => {
+        const id = `tasbeeh${index + 1}`;
+        const repeatElement = item.querySelector('.repeat');
+        const cycleElement = item.querySelector('.cycle-counter');
+        
+        // Reset main counter to 100
+        if (repeatElement) {
+            repeatElement.textContent = '100 مرة';
+            repeatElement.style.background = '';
+            repeatElement.style.color = '';
+            repeatElement.classList.remove('completed');
+            localStorage.setItem(`tasbeeh_${id}`, '100');
+        }
+        
+        // Reset cycle counter to 0
+        if (cycleElement) {
+            cycleElement.textContent = '0';
+            localStorage.setItem(`tasbeeh_cycle_${id}`, '0');
+        }
+    });
+    
+    // Visual feedback
+    const resetButton = document.getElementById('reset-tasbeeh');
+    if (resetButton) {
+        resetButton.textContent = 'تم إعادة التعيين!';
+        resetButton.classList.remove('btn-danger');
+        resetButton.classList.add('btn-success');
+        
+        setTimeout(() => {
+            resetButton.innerHTML = '<i class="fas fa-redo"></i> إعادة تعيين جميع العدادات';
+            resetButton.classList.remove('btn-success');
+            resetButton.classList.add('btn-danger');
+        }, 2000);
     }
 }
 

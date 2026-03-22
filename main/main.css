@@ -1183,6 +1183,44 @@ ul li {
   animation: completed-pulse 0.5s ease;
 }
 
+/* Individual Reset Button Styling */
+.remembrance-item .reset-individual {
+  position: absolute;
+  bottom: 10px;
+  left: 5px;
+  width: 30px;
+  height: 30px;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  border: 1px solid #dee2e6;
+  background: rgba(255, 255, 255, 0.9);
+  color: #6c757d;
+  font-size: 12px;
+  transition: all 0.2s ease;
+  z-index: 10;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.remembrance-item .reset-individual:hover {
+  transform: scale(1.1);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+  background: #f8f9fa;
+  color: #495057;
+}
+
+.remembrance-item .reset-individual.btn-success {
+  background: #28a745;
+  color: white;
+  border-color: #28a745;
+}
+
+.remembrance-item {
+  position: relative !important;
+}
+
 /* Transparent selection for interactive elements */
 .remembrance-item .repeat::selection {
   background-color: transparent;
